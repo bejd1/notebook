@@ -1,11 +1,4 @@
-.fa-google {
-  font-size: 1.2em;
-  margin-right: 6px;
-}
-.loginPage {
-  /* height: 70vh; */
-  width: 40wv;
-
+.login-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +6,7 @@
   padding: 30px;
 }
 
-.login__box {
+.login-box {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -21,7 +14,11 @@
   text-align: center;
 }
 
-.google__btn {
+.login-box p {
+  margin: 8px 0;
+}
+
+.google-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,27 +34,22 @@
   transition: background-color 0.3s;
 }
 
-.google__btn:hover {
+.google-btn:hover {
   background-color: var(--bgInput-color);
   color: black;
 }
 
-.login__box__btn {
+.login-btn {
   width: 100%;
   padding: 10px 20px;
   color: var(--white-color);
   background-color: var(--main-color);
   cursor: pointer;
   border: none;
-  margin-top: 8px;
 }
 
-.login__input {
-  margin-bottom: 10px;
-}
-
-.login__input,
-.password__input {
+.login-input,
+.password-input {
   width: 95%;
   padding: 10px;
   background-color: var(--bgInput-color);
@@ -65,16 +57,17 @@
   border: none;
   font-size: 1em;
   transition: all 0.3s;
-  gap: 9px;
+  gap: 15px;
+  margin-bottom: 12px;
 }
 
-.login__input:focus,
-.password__input:focus {
+.login-input:focus,
+.password-input:focus {
   background-color: var(--white-color);
   color: var(--black-color);
 }
 
-.login__more {
+.login-register {
   display: flex;
   font-size: 0.8em;
   margin-top: 10px;
@@ -82,25 +75,13 @@
   color: #505050c9;
 }
 
-.underline {
+.login-register p {
   text-decoration: underline;
   cursor: pointer;
   transition: all 0.2s;
   color: var(--grey-color);
 }
 
-.td {
-  text-decoration: none;
-  color: var(--grey-color);
-}
-
-.underline:hover {
-  color: rgba(0, 0, 0, 0.863);
-}
-
-.login__text {
-  font-size: 0.8em;
-  color: var(--grey-color);
-  font-weight: 400;
-  margin: 7px 0;
+.login-register p:hover {
+  color: #000;
 }
