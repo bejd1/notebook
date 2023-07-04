@@ -1,10 +1,8 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { IconButton, ListItemText, Tooltip } from "@mui/material";
+import { Box, IconButton, ListItemText } from "@mui/material";
 import { Person } from "react-bootstrap-icons";
-// import CallMadeIcon from "@mui/icons-material/CallMade";
-// import CallReceivedIcon from "@mui/icons-material/CallReceived";
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -17,12 +15,10 @@ export default function BasicMenu() {
   };
 
   return (
-    <div>
-      <Tooltip title="Options">
-        <IconButton onClick={handleClick}>
-          <Person />
-        </IconButton>
-      </Tooltip>
+    <Box display={{ md: "none", xs: "block" }}>
+      <IconButton onClick={handleClick}>
+        <Person />
+      </IconButton>
 
       <Menu
         id="basic-menu"
@@ -34,18 +30,12 @@ export default function BasicMenu() {
         }}
       >
         <MenuItem onClick={handleClose}>
-          {/* <ListItemIcon>
-            <CallReceivedIcon fontSize="small" />
-          </ListItemIcon> */}
-          <ListItemText>Settings</ListItemText>
+          <ListItemText>Login</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          {/* <ListItemIcon>
-            <CallMadeIcon fontSize="small" />
-          </ListItemIcon> */}
-          <ListItemText>Logout</ListItemText>
+          <ListItemText>Register</ListItemText>
         </MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 }

@@ -85,3 +85,10 @@
 .login-register p:hover {
   color: #000;
 }
+
+.login-container-login-btn {
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--grey-color);
+}

@@ -3,8 +3,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip, useTheme } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { tokens } from "../../Theme";
 
 const style = {
   position: "absolute" as "absolute",
@@ -12,7 +13,6 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
 };
@@ -21,10 +21,11 @@ export default function DeleteModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Tooltip title="Delete">
         <IconButton onClick={handleOpen}>
           <DeleteIcon />
@@ -36,7 +37,7 @@ export default function DeleteModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={{ ...style, background: colors.color[100] }}>
           <Typography
             id="modal-modal-title"
             variant="h3"
@@ -53,8 +54,27 @@ export default function DeleteModal() {
               gap: "50px",
             }}
           >
-            <Button sx={{ border: "1px solid" }}>Yes</Button>
-            <Button onClick={handleClose} sx={{ border: "1px solid" }}>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                border: "none",
+                backgroundColor: colors.green[100],
+                color: "white",
+              }}
+            >
+              Yes
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleClose}
+              size="large"
+              sx={{
+                border: "none",
+                backgroundColor: colors.red[100],
+                color: "white",
+              }}
+            >
               No
             </Button>
           </Box>

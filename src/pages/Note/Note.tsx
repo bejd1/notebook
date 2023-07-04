@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box, useTheme } from "@mui/material";
 import { tokens } from "../../Theme";
-import EditNoteModal from "./EditNoteModal";
+import ValueModal from "./ValueModal";
 import DeleteModal from "./DeleteModal";
 import InfoSnackbar from "./SnackBar";
 
@@ -19,6 +19,7 @@ export default function Note() {
         maxWidth: "80%",
         minHeight: 160,
         marginTop: "50px",
+        background: colors.color[100],
       }}
     >
       <CardContent sx={{ p: "20px 25px" }}>
@@ -27,14 +28,14 @@ export default function Note() {
             position: "absolute",
             top: "10px",
             right: "10px",
-            color: colors.primary[100],
+            color: colors.color[100],
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
           {/* Edit modal */}
-          <EditNoteModal />
+          <ValueModal btnName={"Change"} title={"Change your note"} />
           {/* Info about copy */}
           <InfoSnackbar />
           {/* Delete modal */}

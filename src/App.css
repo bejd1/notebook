@@ -1,17 +1,3 @@
-:root {
-  --main-color: #4072bc;
-  --black-color: #000;
-  --white-color: #ffff;
-  --navfooter-color: #212121;
-  --btn-color: #4b8df088;
-  --btnHover-color: #4b8df0;
-  --btnHover-color1: #4b8df0af;
-  --orange-color: #de9600;
-  --grey-color: #505050c9;
-  --strongGrey-color: #50505034;
-  --bgInput-color: #b9b9b9b6;
-}
-
 p {
   margin: 0;
 }

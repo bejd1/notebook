@@ -8,6 +8,7 @@ import Note from "./pages/Note/Note";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./Theme";
 import NoteTools from "./pages/Note/NoteTools";
+// import { Footer } from "./pages/Footer/Footer";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -39,6 +40,7 @@ function App() {
                 }
               />
             </Routes>
+            {/* <Footer /> */}
           </BrowserRouter>
         </ThemeProvider>
       </ColorModeContext.Provider>

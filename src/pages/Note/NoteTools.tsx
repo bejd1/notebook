@@ -2,11 +2,11 @@ import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import { tokens } from "../../Theme";
-import { IconButton, InputBase, Typography } from "@mui/material";
+import { InputBase, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Note from "./Note";
 import NoteToolsSort from "./NoteToolsSort";
-import NestedModal from "./AddNoteModal";
+import ValueModal from "./ValueModal";
 
 export default function NoteTools() {
   const theme = useTheme();
@@ -14,7 +14,7 @@ export default function NoteTools() {
 
   return (
     <Box width="100%">
-      <Typography textAlign="center" variant="h1" m="10px 0">
+      <Typography textAlign="center" variant="h2" m="10px 0" fontWeight="bold">
         Your notes
       </Typography>
       <Box
@@ -35,19 +35,20 @@ export default function NoteTools() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            background: colors.color[100],
           }}
         >
           <Box
             sx={{
-              border: `1px solid ${colors.grey[100]}`,
+              border: `1px solid ${colors.secondary[100]}`,
               borderRadius: "8px",
               marginLeft: "20px",
+              display: "flex",
+              alignItems: "center",
             }}
           >
             <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
-            <IconButton type="button" sx={{ p: 1 }}>
-              <SearchIcon />
-            </IconButton>
+            <SearchIcon sx={{ m: 1 }} />
           </Box>
           <Box
             sx={{ marginRight: "20px", display: "flex", alignItems: "center" }}
@@ -55,7 +56,7 @@ export default function NoteTools() {
             {/* Sort items */}
             <NoteToolsSort />
             {/* Add new note modal  */}
-            <NestedModal />
+            <ValueModal btnName={"Create"} title={"Add new note"} />
           </Box>
         </Card>
         <Note />

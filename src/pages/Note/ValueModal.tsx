@@ -2,24 +2,38 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { FormControl, IconButton, TextField, Tooltip } from "@mui/material";
+import {
+  FormControl,
+  IconButton,
+  TextField,
+  Tooltip,
+  useTheme,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import { Edit } from "@mui/icons-material";
+import { tokens } from "../../Theme";
 
 const style = {
   position: "absolute" as "absolute",
-  top: "50%",
+  top: "45%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
   boxShadow: 24,
   pt: 2,
   px: 4,
   pb: 3,
 };
 
-export default function NestedModal() {
+interface ModalProps {
+  btnName: string;
+  title: string;
+}
+
+const ValueModal: React.FC<ModalProps> = ({ btnName, title }) => {
   const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -30,10 +44,10 @@ export default function NestedModal() {
     event.preventDefault();
   };
   return (
-    <div>
+    <Box sx={{}}>
       <Tooltip title="Create new note" sx={{ height: "100%" }}>
         <IconButton onClick={handleOpen}>
-          <AddIcon />
+          {btnName === "Create" ? <AddIcon /> : <Edit />}
         </IconButton>
       </Tooltip>
       <Modal
@@ -42,37 +56,49 @@ export default function NestedModal() {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, minWidth: "800px", minHeight: "300px" }}>
+        <Box
+          sx={{
+            ...style,
+            minWidth: "80%",
+            minHeight: "300px",
+            background: colors.color[100],
+          }}
+        >
           <Button
             onClick={handleClose}
             sx={{ position: "absolute", top: "20px", right: "25px" }}
           >
             <CloseIcon />
           </Button>
-          <h2 id="parent-modal-title">Create new note</h2>
+          <h2 id="parent-modal-title">{title}</h2>
           <FormControl fullWidth onSubmit={() => handleSubmit}>
             <TextField fullWidth label="Title" sx={{ marginBottom: "30px" }} />
             <TextField
               id="outlined-multiline-static"
               label="Note"
               multiline
-              rows={4}
+              rows={5}
               sx={{ width: "100%", marginBottom: "55px" }}
             />
             <Button
               type="submit"
+              variant="contained"
               sx={{
                 position: "absolute",
                 bottom: "0px",
                 right: "0px",
-                border: "1px solid",
+                border: "none",
+                color: "#fff",
+                background: colors.btn[100],
               }}
             >
-              Create
+              {btnName}
             </Button>
           </FormControl>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
-}
+};
+
+export default ValueModal;

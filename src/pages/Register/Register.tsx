@@ -3,33 +3,27 @@ import "./Register.css";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Google } from "react-bootstrap-icons";
 import { useState } from "react";
-
-interface RegisterFormValues {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../Firebase";
 
 export const Register = () => {
-  const [values, setValues] = useState<RegisterFormValues>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const signUp = (e: React.FormEvent) => {
     e.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    console.log("Submitted values:", values);
-    setValues({ firstName: "", lastName: "", email: "", password: "" });
+    setPassword("");
+    setEmail("");
   };
+
   return (
     <div className="register-container">
       <h2>Start save notice for free</h2>
@@ -38,16 +32,17 @@ export const Register = () => {
           <Google /> Sign in with Google
         </button>
         <p>or</p>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={signUp}>
           <div className="register-box-column">
-            <input
+            {/* <input
               className="register-firstName-input"
               type="text"
               placeholder="First Name"
               id="firstName"
               name="firstName"
-              value={values.firstName}
-              onChange={handleChange}
+              onChange={(e) => {
+                setValues(e.target.value);
+              }}
             />
             <input
               className="register-lastName-input"
@@ -55,17 +50,19 @@ export const Register = () => {
               placeholder="Last Name"
               id="lastName"
               name="lastName"
-              value={values.lastName}
-              onChange={handleChange}
-            />
+              onChange={(e) => {
+                setValues(e.target.value);
+              }}
+            /> */}
             <input
               className="register-email-input"
               type="email"
               placeholder="Email"
               id="email"
               name="email"
-              value={values.email}
-              onChange={handleChange}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
             <input
               className="register-password-input"
@@ -73,8 +70,9 @@ export const Register = () => {
               placeholder="Password"
               id="password"
               name="password"
-              value={values.password}
-              onChange={handleChange}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
           </div>
 
@@ -98,7 +96,9 @@ export const Register = () => {
               </li>
             </ul>
           </div>
-          <button className="register-btn">Create account</button>
+          <button type="submit" className="register-btn">
+            Create account
+          </button>
         </form>
       </div>
       <div className="register-container-login">

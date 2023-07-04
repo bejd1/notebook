@@ -2,32 +2,34 @@ import { Link } from "react-router-dom";
 import { Google } from "react-bootstrap-icons";
 import "./Login.css";
 import { useState } from "react";
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../Firebase";
 
 export const Login = () => {
-  const [values, setValues] = useState<LoginFormValues>({
-    email: "",
-    password: "",
-  });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
-  };
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-    console.log("Submitted values:", values);
-    setValues({ email: "", password: "" });
+  const signIn = (e: React.FormEvent) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
+  const clearInput = () => {
+    setPassword("");
+    setEmail("");
+  };
+
   return (
     <div className="login-container">
       <h2>Log Into My Account</h2>
       <div className="login-box">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={signIn}>
           <button className="google-btn">
             <Google />
             Sign in with Google
@@ -39,8 +41,9 @@ export const Login = () => {
             placeholder="Email or Username"
             id="email"
             name="email"
-            value={values.email}
-            onChange={handleChange}
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
           />
           <input
             className="password-input"
@@ -48,17 +51,18 @@ export const Login = () => {
             type="password"
             id="password"
             name="password"
-            value={values.password}
-            onChange={handleChange}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
           />
-          <button type="submit" className="login-btn">
+          <button onClick={clearInput} type="submit" className="login-btn">
             Log In
           </button>
         </form>
       </div>
       <div className="login-register">
-        <Link to="/register">
-          <p>Don't have an account?</p>
+        <Link to="/register" className="login-container-login-btn">
+          Don't have an account?
         </Link>
       </div>
     </div>
