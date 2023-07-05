@@ -9,7 +9,6 @@ import {
   Tooltip,
   useTheme,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { Edit } from "@mui/icons-material";
 import { tokens } from "../../Theme";
@@ -25,13 +24,9 @@ const style = {
   pb: 3,
 };
 
-interface ModalProps {
-  btnName: string;
-  title: string;
-}
-
-const ValueModal: React.FC<ModalProps> = ({ btnName, title }) => {
+const EditNoteModal = () => {
   const [open, setOpen] = React.useState(false);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const handleOpen = () => {
@@ -47,7 +42,7 @@ const ValueModal: React.FC<ModalProps> = ({ btnName, title }) => {
     <Box sx={{}}>
       <Tooltip title="Create new note" sx={{ height: "100%" }}>
         <IconButton onClick={handleOpen}>
-          {btnName === "Create" ? <AddIcon /> : <Edit />}
+          <Edit />
         </IconButton>
       </Tooltip>
       <Modal
@@ -70,7 +65,7 @@ const ValueModal: React.FC<ModalProps> = ({ btnName, title }) => {
           >
             <CloseIcon />
           </Button>
-          <h2 id="parent-modal-title">{title}</h2>
+          <h2 id="parent-modal-title">Edit note</h2>
           <FormControl fullWidth onSubmit={() => handleSubmit}>
             <TextField fullWidth label="Title" sx={{ marginBottom: "30px" }} />
             <TextField
@@ -92,7 +87,7 @@ const ValueModal: React.FC<ModalProps> = ({ btnName, title }) => {
                 background: colors.btn[100],
               }}
             >
-              {btnName}
+              Edit
             </Button>
           </FormControl>
         </Box>
@@ -101,4 +96,4 @@ const ValueModal: React.FC<ModalProps> = ({ btnName, title }) => {
   );
 };
 
-export default ValueModal;
+export default EditNoteModal;

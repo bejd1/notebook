@@ -17,7 +17,11 @@ const style = {
   p: 4,
 };
 
-export default function DeleteModal() {
+interface DeleteProp {
+  deleteNote: (index: number) => void;
+}
+
+export default function DeleteModal({ deleteNote }: DeleteProp) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -65,6 +69,7 @@ export default function DeleteModal() {
             >
               Yes
             </Button>
+            <button onClick={() => deleteNote}>fasdfdsa</button>
             <Button
               variant="contained"
               onClick={handleClose}

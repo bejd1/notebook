@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "./Nav.css";
 import { Box, Divider, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../Theme";
 import AuthDetails from "../../AuthDetails";
@@ -27,6 +26,7 @@ export const Nav = () => {
             </Typography>
           </Link>
         </Box>
+        {/* Nav right */}
         <AuthDetails />
       </Box>
       <Divider

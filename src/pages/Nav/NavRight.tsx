@@ -46,13 +46,12 @@ export const NavRight = () => {
             Register
           </Link>
         </Button>
-        {/* <Button onClick={logout}> Sign Out </Button> */}
       </Box>
       <IconButton onClick={colorMode.toggleColorMode}>
         {theme.palette.mode === "dark" ? (
-          <DarkModeOutlinedIcon />
-        ) : (
           <LightModeOutlinedIcon />
+        ) : (
+          <DarkModeOutlinedIcon />
         )}
       </IconButton>
       <PersonIcon />

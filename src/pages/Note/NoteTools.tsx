@@ -6,7 +6,7 @@ import { InputBase, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Note from "./Note";
 import NoteToolsSort from "./NoteToolsSort";
-import ValueModal from "./ValueModal";
+import AddNoteModal from "./AddNoteModal";
 
 export default function NoteTools() {
   const theme = useTheme();
@@ -56,7 +56,7 @@ export default function NoteTools() {
             {/* Sort items */}
             <NoteToolsSort />
             {/* Add new note modal  */}
-            <ValueModal btnName={"Create"} title={"Add new note"} />
+            <AddNoteModal />
           </Box>
         </Card>
         <Note />

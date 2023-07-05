@@ -1,20 +1,42 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Google } from "react-bootstrap-icons";
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../Firebase";
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithPopup,
+} from "firebase/auth";
 
 export const Register = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [authing, setAuthing] = useState(false);
+  const auth = getAuth();
+  const navigate = useNavigate();
+
+  const signInWithGoogle = async () => {
+    setAuthing(true);
+
+    signInWithPopup(auth, new GoogleAuthProvider())
+      .then((response) => {
+        console.log(response.user.uid);
+        navigate("/tools");
+      })
+      .catch((error) => {
+        console.log(error);
+        setAuthing(false);
+      });
+  };
 
   const signUp = (e: React.FormEvent) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
+        navigate("/tools");
       })
       .catch((error) => {
         console.log(error);
@@ -28,7 +50,11 @@ export const Register = () => {
     <div className="register-container">
       <h2>Start save notice for free</h2>
       <div className="register-box">
-        <button className="google-btn">
+        <button
+          className="google-btn"
+          onClick={() => signInWithGoogle()}
+          disabled={authing}
+        >
           <Google /> Sign in with Google
         </button>
         <p>or</p>
