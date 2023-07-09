@@ -1,7 +1,7 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Box, useTheme } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import { tokens } from "../../Theme";
 import DeleteModal from "./DeleteModal";
 import InfoSnackbar from "./SnackBar";
@@ -9,17 +9,21 @@ import EditNoteModal from "./EditNoteModal";
 import { useEffect, useState } from "react";
 import { database } from "../../Firebase";
 import { off, onValue, ref, remove } from "firebase/database";
+import copy from "copy-to-clipboard";
 
 interface NoteI {
   id: string;
   title: string;
   note: string;
+  date: number;
 }
 
 const Note = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState<NoteI[]>([]);
+
+  // set data
 
   useEffect(() => {
     const notesRef = ref(database, "notes");
@@ -32,13 +36,15 @@ const Note = () => {
         notes.push(note);
       });
       setData(notes);
+      console.log(notes);
     });
 
     return () => {
-      // Cleanup the listener when the component unmounts
       off(notesRef, "value", notesListener as any);
     };
   }, []);
+
+  // delete note
 
   const deleteNote = (id: string) => {
     const noteRef = ref(database, `notes/${id}`);
@@ -53,6 +59,20 @@ const Note = () => {
         console.log("Error deleting note:", error);
       });
   };
+  // sort
+  const [order, setOrder] = useState<"ASC" | "DSC">("ASC");
+
+  const sorting = (col: keyof NoteI) => {
+    if (order === "ASC") {
+      const sorted = [...data].sort((a, b) => (a[col] > b[col] ? 1 : -1));
+      setData(sorted);
+      setOrder("DSC");
+    } else {
+      const sorted = [...data].sort((a, b) => (a[col] < b[col] ? 1 : -1));
+      setData(sorted);
+      setOrder("ASC");
+    }
+  };
   return (
     <Box
       sx={{
@@ -64,13 +84,19 @@ const Note = () => {
         mb: "100px",
       }}
     >
+      <Button onClick={() => sorting("date")}>
+        {order === "ASC" ? "Sort Oldest First" : "Sort Latest First"}
+      </Button>
       {data.length === 0 ? (
         <Typography variant="h3" sx={{ mt: "50px" }}>
-          Your notes is empty.
+          Your notes are empty.
         </Typography>
       ) : (
         data.map((item) => {
           const { id, title, note } = item;
+          const copyToClipboard = () => {
+            copy(note);
+          };
 
           return (
             <Card
@@ -97,9 +123,9 @@ const Note = () => {
                   }}
                 >
                   {/* Edit modal */}
-                  <EditNoteModal />
+                  <EditNoteModal note={note} title={title} id={id} />
                   {/* Info about copy */}
-                  <InfoSnackbar />
+                  <InfoSnackbar copyToClipboard={copyToClipboard} />
                   {/* Delete modal */}
                   <DeleteModal deleteNote={deleteNote} id={id} />
                 </Box>

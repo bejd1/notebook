@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
@@ -12,9 +12,11 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { Edit } from "@mui/icons-material";
 import { tokens } from "../../Theme";
+import { database } from "../../Firebase";
+import { ref, update } from "firebase/database";
 
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute",
   top: "45%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -24,23 +26,45 @@ const style = {
   pb: 3,
 };
 
-const EditNoteModal = () => {
-  const [open, setOpen] = React.useState(false);
+interface EditI {
+  note: string;
+  title: string;
+  id: string;
+}
+
+const EditNoteModal = ({ title, note, id }: EditI) => {
+  const [open, setOpen] = useState(false);
+  const [editTitle, setEditTitle] = useState<string>(title);
+  const [editNote, setEditNote] = useState<string>(note);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   const handleOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const dateObject = new Date();
+    let date = dateObject.toLocaleString("en-US", { timeZone: "CET" });
+    update(ref(database, `notes/${id}`), {
+      title: editTitle,
+      note: editNote,
+      date: date,
+    });
+
+    handleClose();
   };
+
   return (
-    <Box sx={{}}>
-      <Tooltip title="Create new note" sx={{ height: "100%" }}>
+    <Box>
+      <Tooltip title="Edit note">
         <IconButton onClick={handleOpen}>
           <Edit />
         </IconButton>
@@ -66,30 +90,40 @@ const EditNoteModal = () => {
             <CloseIcon />
           </Button>
           <h2 id="parent-modal-title">Edit note</h2>
-          <FormControl fullWidth onSubmit={() => handleSubmit}>
-            <TextField fullWidth label="Title" sx={{ marginBottom: "30px" }} />
-            <TextField
-              id="outlined-multiline-static"
-              label="Note"
-              multiline
-              rows={5}
-              sx={{ width: "100%", marginBottom: "55px" }}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                position: "absolute",
-                bottom: "0px",
-                right: "0px",
-                border: "none",
-                color: "#fff",
-                background: colors.btn[100],
-              }}
-            >
-              Edit
-            </Button>
-          </FormControl>
+          <form onSubmit={handleSubmit}>
+            <FormControl fullWidth>
+              <TextField
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                fullWidth
+                label="Title"
+                sx={{ marginBottom: "30px" }}
+              />
+              <TextField
+                value={editNote}
+                onChange={(e) => setEditNote(e.target.value)}
+                id="outlined-multiline-static"
+                label="Note"
+                multiline
+                rows={5}
+                sx={{ width: "100%", marginBottom: "55px" }}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  position: "absolute",
+                  bottom: "0px",
+                  right: "0px",
+                  border: "none",
+                  color: "#fff",
+                  background: colors.btn[100],
+                }}
+              >
+                Edit
+              </Button>
+            </FormControl>
+          </form>
         </Box>
       </Modal>
     </Box>

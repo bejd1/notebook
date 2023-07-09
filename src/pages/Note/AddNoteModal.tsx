@@ -50,13 +50,18 @@ const AddNoteModal = () => {
   const addTodo = () => {
     const noteRef = ref(database, "/notes");
     const id = uuidv4();
+    const dateObject = new Date();
+    let date = dateObject.toLocaleString("en-US", { timeZone: "CET" });
     const todo = {
       id: id,
       title: title,
       note: note,
+      date: date,
     };
     push(noteRef, todo);
-    // clear inputs
+    console.log(date);
+
+    // clear inputs and close modal
     setTitle("");
     setNote("");
     setOpen(false);

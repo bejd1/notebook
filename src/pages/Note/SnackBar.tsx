@@ -8,7 +8,11 @@ interface State extends SnackbarOrigin {
   open: boolean;
 }
 
-export default function InfoSnackbar() {
+interface CopyToClipboardI {
+  copyToClipboard: () => void;
+}
+
+export default function InfoSnackbar({ copyToClipboard }: CopyToClipboardI) {
   const [state, setState] = React.useState<State>({
     open: false,
     vertical: "top",
@@ -18,6 +22,7 @@ export default function InfoSnackbar() {
 
   const handleClick = (newState: SnackbarOrigin) => () => {
     setState({ ...newState, open: true });
+    copyToClipboard();
   };
 
   const handleClose = () => {
