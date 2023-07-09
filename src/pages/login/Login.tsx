@@ -48,54 +48,50 @@ export const Login = () => {
 
   return (
     <div>
-      {!signIn ? (
-        <div>elo</div>
-      ) : (
-        <div className="login-container">
-          <h2>Log Into My Account</h2>
-          <div className="login-box">
-            <form onSubmit={signIn}>
-              <button
-                className="google-btn"
-                onClick={() => signInWithGoogle()}
-                disabled={authing}
-              >
-                <Google />
-                Sign in with Google
-              </button>
-              <p>or</p>
-              <input
-                className="login-input"
-                type="text"
-                placeholder="Email or Username"
-                id="email"
-                name="email"
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
-              />
-              <input
-                className="password-input"
-                placeholder="Password"
-                type="password"
-                id="password"
-                name="password"
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
-              />
-              <button onClick={clearInput} type="submit" className="login-btn">
-                Log In
-              </button>
-            </form>
-          </div>
-          <div className="login-register">
-            <Link to="/register" className="login-container-login-btn">
-              Don't have an account?
-            </Link>
-          </div>
+      <div className="login-container">
+        <h2>Log Into My Account</h2>
+        <div className="login-box">
+          <button
+            className="google-btn"
+            onClick={() => signInWithGoogle()}
+            disabled={authing}
+          >
+            <Google />
+            Sign in with Google
+          </button>
+          <form onSubmit={signIn}>
+            <p>or</p>
+            <input
+              className="login-input"
+              type="text"
+              placeholder="Email or Username"
+              id="email"
+              name="email"
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+            />
+            <input
+              className="password-input"
+              placeholder="Password"
+              type="password"
+              id="password"
+              name="password"
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
+            />
+            <button onClick={clearInput} type="submit" className="login-btn">
+              Log In
+            </button>
+          </form>
         </div>
-      )}
+        <div className="login-register">
+          <Link to="/register" className="login-container-login-btn">
+            Don't have an account?
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

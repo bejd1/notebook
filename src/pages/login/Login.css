@@ -25,7 +25,7 @@
   gap: 8px;
   width: 100%;
   background: none;
-  border: 1px solid var(--bgInput-color);
+  border: 1px solid #fff;
   color: var(--grey-color);
   padding: 10px 20px;
   cursor: pointer;
@@ -45,7 +45,7 @@
   color: var(--white-color);
   background-color: var(--main-color);
   cursor: pointer;
-  border: none;
+  border: 1px solid #fff;
 }
 
 .login-input,
@@ -54,7 +54,8 @@
   padding: 10px;
   background-color: var(--bgInput-color);
   color: var(--grey-color);
-  border: none;
+  border: 1px solid #fff;
+  border-radius: 5px;
   font-size: 1em;
   transition: all 0.3s;
   gap: 15px;

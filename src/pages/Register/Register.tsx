@@ -52,6 +52,7 @@ export const Register = () => {
       <div className="register-box">
         <button
           className="google-btn"
+          style={{ border: "1px solid #fff" }}
           onClick={() => signInWithGoogle()}
           disabled={authing}
         >
@@ -60,26 +61,6 @@ export const Register = () => {
         <p>or</p>
         <form onSubmit={signUp}>
           <div className="register-box-column">
-            {/* <input
-              className="register-firstName-input"
-              type="text"
-              placeholder="First Name"
-              id="firstName"
-              name="firstName"
-              onChange={(e) => {
-                setValues(e.target.value);
-              }}
-            />
-            <input
-              className="register-lastName-input"
-              type="text"
-              placeholder="Last Name"
-              id="lastName"
-              name="lastName"
-              onChange={(e) => {
-                setValues(e.target.value);
-              }}
-            /> */}
             <input
               className="register-email-input"
               type="email"

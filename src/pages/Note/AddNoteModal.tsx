@@ -15,6 +15,7 @@ import { tokens } from "../../Theme";
 import { useState } from "react";
 import { database } from "../../Firebase";
 import { push, ref } from "firebase/database";
+import { v4 as uuidv4 } from "uuid";
 
 const style = {
   position: "absolute" as "absolute",
@@ -33,25 +34,34 @@ const AddNoteModal = () => {
   const [note, setNote] = useState<string>("");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   const handleOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
-  const addTodo = () => {
-    const todoRef = ref(database, "/notes");
 
+  const addTodo = () => {
+    const noteRef = ref(database, "/notes");
+    const id = uuidv4();
     const todo = {
+      id: id,
       title: title,
       note: note,
     };
-    push(todoRef, todo);
-    console.log(title, note);
+    push(noteRef, todo);
+    // clear inputs
+    setTitle("");
+    setNote("");
+    setOpen(false);
   };
+
   return (
     <Box>
       <Tooltip title="Create new note" sx={{ height: "100%" }}>

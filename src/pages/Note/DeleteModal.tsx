@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -17,16 +17,22 @@ const style = {
   p: 4,
 };
 
-interface DeleteProp {
-  deleteNote: (index: number) => void;
+interface DeleteModalProps {
+  deleteNote: (id: string) => void;
+  id: string;
 }
 
-export default function DeleteModal({ deleteNote }: DeleteProp) {
-  const [open, setOpen] = React.useState(false);
+export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const handleDelete = () => {
+    deleteNote(id);
+    handleClose();
+  };
 
   return (
     <div>
@@ -59,6 +65,7 @@ export default function DeleteModal({ deleteNote }: DeleteProp) {
             }}
           >
             <Button
+              onClick={handleDelete}
               variant="contained"
               size="large"
               sx={{
@@ -69,7 +76,6 @@ export default function DeleteModal({ deleteNote }: DeleteProp) {
             >
               Yes
             </Button>
-            <button onClick={() => deleteNote}>fasdfdsa</button>
             <Button
               variant="contained"
               onClick={handleClose}
