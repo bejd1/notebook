@@ -7,8 +7,21 @@ import SearchIcon from "@mui/icons-material/Search";
 import Note from "./Note";
 import NoteToolsSort from "./NoteToolsSort";
 import AddNoteModal from "./AddNoteModal";
+import { Dispatch, SetStateAction } from "react";
 
-export default function NoteTools() {
+interface NoteI {
+  id: string;
+  title: string;
+  note: string;
+  date: number;
+}
+
+type NoteProps = {
+  setData: Dispatch<SetStateAction<NoteI[]>>;
+  data: NoteI[];
+};
+
+export default function NoteTools({ setData, data }: NoteProps) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -54,12 +67,12 @@ export default function NoteTools() {
             sx={{ marginRight: "20px", display: "flex", alignItems: "center" }}
           >
             {/* Sort items */}
-            <NoteToolsSort />
+            <NoteToolsSort setData={setData} data={data} />
             {/* Add new note modal  */}
             <AddNoteModal />
           </Box>
         </Card>
-        <Note />
+        <Note setData={setData} data={data} />
       </Box>
     </Box>
   );
