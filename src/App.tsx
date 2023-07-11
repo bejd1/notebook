@@ -24,6 +24,7 @@ function App() {
   const [theme, colorMode] = useMode();
 
   const [data, setData] = useState<NoteI[]>([]);
+  const searchInput: string = "";
 
   // set data
 
@@ -59,7 +60,13 @@ function App() {
               <Route path="/register" element={<RegisterCard />} />
               <Route
                 path="/note"
-                element={<Note setData={setData} data={data} />}
+                element={
+                  <Note
+                    setData={setData}
+                    data={data}
+                    searchInput={searchInput}
+                  />
+                }
               />
               <Route
                 path="/tools"

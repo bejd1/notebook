@@ -1,3 +1,4 @@
+import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -21,13 +22,12 @@ interface NoteI {
 type NoteProps = {
   setData: Dispatch<SetStateAction<NoteI[]>>;
   data: NoteI[];
+  searchInput: string;
 };
 
-const Note = ({ setData, data }: NoteProps) => {
+const Note = ({ setData, data, searchInput }: NoteProps) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  // delete note
 
   const deleteNote = (id: string) => {
     const noteRef = ref(database, `notes/${id}`);
@@ -57,58 +57,66 @@ const Note = ({ setData, data }: NoteProps) => {
           Your notes are empty.
         </Typography>
       ) : (
-        data.map((item: NoteI) => {
-          const { id, title, note, date } = item;
-          const copyToClipboard = () => {
-            copy(note);
-          };
+        data
+          .filter((item) => {
+            if (searchInput === "") {
+              return true;
+            } else {
+              return item.title
+                .toLowerCase()
+                .includes(searchInput.toLowerCase());
+            }
+          })
+          .map((item: NoteI) => {
+            const { id, title, note, date } = item;
 
-          return (
-            <Card
-              key={id}
-              sx={{
-                position: "relative",
-                minWidth: "80%",
-                maxWidth: "80%",
-                minHeight: 160,
-                marginTop: "50px",
-                background: colors.color[100],
-              }}
-            >
-              <CardContent sx={{ p: "20px 25px" }}>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: "10px",
-                    right: "10px",
-                    color: colors.color[100],
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {/* Edit modal */}
-                  <EditNoteModal note={note} title={title} id={id} />
-                  {/* Info about copy */}
-                  <InfoSnackbar copyToClipboard={copyToClipboard} />
-                  {/* Delete modal */}
-                  <DeleteModal deleteNote={deleteNote} id={id} />
-                </Box>
-                <Box>
-                  <Typography variant="h3" sx={{ marginBottom: "20px" }}>
-                    {title}
-                  </Typography>
-                  <Typography>{note}</Typography>
-                </Box>
-                <Box
-                  sx={{ position: "absolute", bottom: "10px", right: "10px" }}
-                >
-                  <Typography sx={{ fontSize: "12px" }}>{date}</Typography>
-                </Box>
-              </CardContent>
-            </Card>
-          );
-        })
+            const copyToClipboard = () => {
+              copy(note);
+            };
+
+            return (
+              <Card
+                key={id}
+                sx={{
+                  position: "relative",
+                  minWidth: "80%",
+                  maxWidth: "80%",
+                  minHeight: 160,
+                  marginTop: "50px",
+                  background: colors.color[100],
+                }}
+              >
+                <CardContent sx={{ p: "20px 25px" }}>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      color: colors.color[100],
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <EditNoteModal note={note} title={title} id={id} />
+                    <InfoSnackbar copyToClipboard={copyToClipboard} />
+                    <DeleteModal deleteNote={deleteNote} id={id} />
+                  </Box>
+                  <Box>
+                    <Typography variant="h3" sx={{ marginBottom: "20px" }}>
+                      {title}
+                    </Typography>
+                    <Typography>{note}</Typography>
+                  </Box>
+                  <Box
+                    sx={{ position: "absolute", bottom: "10px", right: "10px" }}
+                  >
+                    <Typography sx={{ fontSize: "12px" }}>{date}</Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            );
+          })
       )}
     </Box>
   );

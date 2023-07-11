@@ -7,7 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Note from "./Note";
 import NoteToolsSort from "./NoteToolsSort";
 import AddNoteModal from "./AddNoteModal";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 interface NoteI {
   id: string;
@@ -24,9 +24,10 @@ type NoteProps = {
 export default function NoteTools({ setData, data }: NoteProps) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [searchInput, setSearchInput] = useState<string>("");
 
   return (
-    <Box width="100%">
+    <Box width="100%" mt="110px">
       <Typography textAlign="center" variant="h2" m="10px 0" fontWeight="bold">
         Your notes
       </Typography>
@@ -60,7 +61,11 @@ export default function NoteTools({ setData, data }: NoteProps) {
               alignItems: "center",
             }}
           >
-            <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
+            <InputBase
+              onChange={(e) => setSearchInput(e.target.value)}
+              sx={{ ml: 2, flex: 1 }}
+              placeholder="Search"
+            />
             <SearchIcon sx={{ m: 1 }} />
           </Box>
           <Box
@@ -72,7 +77,7 @@ export default function NoteTools({ setData, data }: NoteProps) {
             <AddNoteModal />
           </Box>
         </Card>
-        <Note setData={setData} data={data} />
+        <Note setData={setData} data={data} searchInput={searchInput} />
       </Box>
     </Box>
   );
