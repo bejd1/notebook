@@ -27,7 +27,7 @@ export default function NoteTools({ setData, data }: NoteProps) {
   const [searchInput, setSearchInput] = useState<string>("");
 
   return (
-    <Box width="100%" mt="110px">
+    <Box width="100%" mt="110px" overflow="hidden">
       <Typography textAlign="center" variant="h2" m="10px 0" fontWeight="bold">
         Your notes
       </Typography>

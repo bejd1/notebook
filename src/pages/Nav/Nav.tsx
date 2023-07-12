@@ -9,7 +9,14 @@ export const Nav = () => {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box sx={{ width: "100%", position: "fixed", top: "0", zIndex: "2" }}>
+    <Box
+      sx={{
+        width: "100%",
+        position: "fixed",
+        top: "0",
+        zIndex: "3",
+      }}
+    >
       <Box
         display="flex"
         justifyContent="space-between"

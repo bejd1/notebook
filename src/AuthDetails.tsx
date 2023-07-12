@@ -1,30 +1,14 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth } from "./Firebase";
+import { useContext } from "react";
 import { NavRight } from "./pages/Nav/NavRight";
 import AuthDetailsIcon from "./AuthDetailsIcon";
+import { AuthContext } from "./App";
 
 interface User {
   email: string;
 }
 
 const AuthDetails = () => {
-  const [authUser, setAuthUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const listen = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setAuthUser(user as User);
-      } else {
-        setAuthUser(null);
-      }
-      console.log(user);
-    });
-
-    return () => {
-      listen();
-    };
-  }, []);
+  const { authUser }: { authUser: User | null } = useContext(AuthContext);
 
   return (
     <div>
