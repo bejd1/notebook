@@ -7,6 +7,7 @@ import {
   IconButton,
   TextField,
   Tooltip,
+  Typography,
   useTheme,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -14,9 +15,10 @@ import { Edit } from "@mui/icons-material";
 import { tokens } from "../../Theme";
 import { database } from "../../Firebase";
 import { ref, update } from "firebase/database";
+import { useForm } from "react-hook-form";
 
 const style = {
-  position: "absolute",
+  position: "absolute" as "absolute",
   top: "45%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -32,13 +34,25 @@ interface EditI {
   id: string;
 }
 
+interface IEditFormInput {
+  title: string;
+  note: string;
+  example: string;
+}
+
 const EditNoteModal = ({ title, note, id }: EditI) => {
   const [open, setOpen] = useState(false);
   const [editTitle, setEditTitle] = useState<string>(title);
   const [editNote, setEditNote] = useState<string>(note);
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IEditFormInput>();
 
   const handleOpen = () => {
     setOpen(true);
@@ -48,17 +62,15 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const onSubmit = () => {
     const dateObject = new Date();
-    let date = dateObject.toLocaleString("en-US", { timeZone: "CET" });
+    const date = dateObject.toLocaleString("en-US", { timeZone: "CET" });
     update(ref(database, `notes/${id}`), {
       title: editTitle,
       note: editNote,
       date: date,
     });
-
+    reset();
     handleClose();
   };
 
@@ -90,24 +102,54 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
             <CloseIcon />
           </Button>
           <h2 id="parent-modal-title">Edit note</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl fullWidth>
               <TextField
+                {...register("title", {
+                  required: true,
+                  minLength: 3,
+                })}
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 fullWidth
                 label="Title"
-                sx={{ marginBottom: "30px" }}
+                sx={{ mb: "8px" }}
               />
+              {errors?.title?.type === "required" && (
+                <Typography sx={{ color: "#ff3333" }}>
+                  This field is required
+                </Typography>
+              )}
+              {errors?.title?.type === "minLength" && (
+                <Typography sx={{ color: "#ff3333" }}>
+                  The minimum number of characters is 3.
+                </Typography>
+              )}
               <TextField
+                {...register("note", {
+                  required: true,
+                  minLength: 3,
+                })}
                 value={editNote}
                 onChange={(e) => setEditNote(e.target.value)}
                 id="outlined-multiline-static"
                 label="Note"
                 multiline
                 rows={5}
-                sx={{ width: "100%", marginBottom: "55px" }}
+                sx={{ width: "100%", mt: "8px" }}
               />
+              <Box sx={{ height: "60px" }}>
+                {errors?.note?.type === "minLength" && (
+                  <Typography sx={{ color: "#ff3333", mt: "8px" }}>
+                    The minimum number of characters is 3.
+                  </Typography>
+                )}
+                {errors?.note?.type === "required" && (
+                  <Typography sx={{ color: "#ff3333", mt: "8px" }}>
+                    This field is required
+                  </Typography>
+                )}
+              </Box>
               <Button
                 type="submit"
                 variant="contained"

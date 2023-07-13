@@ -7,15 +7,22 @@ import {
   IconButton,
   TextField,
   Tooltip,
+  Typography,
   useTheme,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { tokens } from "../../Theme";
-import { useState } from "react";
 import { database } from "../../Firebase";
 import { push, ref } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
+import { useForm } from "react-hook-form";
+
+interface IFormInput {
+  title: string;
+  note: string;
+  example: string;
+}
 
 const style = {
   position: "absolute" as "absolute",
@@ -30,10 +37,15 @@ const style = {
 
 const AddNoteModal = () => {
   const [open, setOpen] = React.useState(false);
-  const [title, setTitle] = useState<string>("");
-  const [note, setNote] = useState<string>("");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IFormInput>();
 
   const handleOpen = () => {
     setOpen(true);
@@ -43,27 +55,22 @@ const AddNoteModal = () => {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
-
-  const addTodo = () => {
+  const onSubmit = (data: IFormInput) => {
     const noteRef = ref(database, "/notes");
     const id = uuidv4();
     const dateObject = new Date();
-    let date = dateObject.toLocaleString("en-US", { timeZone: "CET" });
+    const date = dateObject.toLocaleString("en-US", { timeZone: "CET" });
     const todo = {
       id: id,
-      title: title,
-      note: note,
+      title: data.title,
+      note: data.note,
       date: date,
     };
     push(noteRef, todo);
     console.log(date);
 
     // clear inputs and close modal
-    setTitle("");
-    setNote("");
+    reset();
     setOpen(false);
   };
 
@@ -95,39 +102,67 @@ const AddNoteModal = () => {
             <CloseIcon />
           </Button>
           <h2 id="parent-modal-title">Add new note</h2>
-          <FormControl fullWidth onSubmit={() => handleSubmit}>
-            <TextField
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-              fullWidth
-              label="Title"
-              sx={{ marginBottom: "30px" }}
-            />
-            <TextField
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              id="outlined-multiline-static"
-              label="Note"
-              multiline
-              rows={5}
-              sx={{ width: "100%", marginBottom: "55px" }}
-            />
-            <Button
-              onClick={addTodo}
-              type="submit"
-              variant="contained"
-              sx={{
-                position: "absolute",
-                bottom: "0px",
-                right: "0px",
-                border: "none",
-                color: "#fff",
-                background: colors.btn[100],
-              }}
-            >
-              Add note
-            </Button>
-          </FormControl>
+
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl fullWidth>
+              <TextField
+                {...register("title", {
+                  required: true,
+                  minLength: 3,
+                })}
+                fullWidth
+                label="Title"
+                sx={{ mb: "8px" }}
+              />
+              {errors?.title?.type === "required" && (
+                <Typography sx={{ color: "#ff3333" }}>
+                  This field is required
+                </Typography>
+              )}
+              {errors?.title?.type === "minLength" && (
+                <Typography sx={{ color: "#ff3333" }}>
+                  The minimum number of characters is 3.
+                </Typography>
+              )}
+              <TextField
+                {...register("note", {
+                  required: true,
+                  minLength: 3,
+                })}
+                id="outlined-multiline-static"
+                label="Note"
+                multiline
+                rows={5}
+                sx={{ width: "100%", mt: "8px" }}
+              />
+              <Box sx={{ height: "60px" }}>
+                {errors?.note?.type === "minLength" && (
+                  <Typography sx={{ color: "#ff3333", m: "8px 0" }}>
+                    The minimum number of characters is 3.
+                  </Typography>
+                )}
+                {errors?.note?.type === "required" && (
+                  <Typography sx={{ color: "#ff3333", m: "8px 0" }}>
+                    This field is required
+                  </Typography>
+                )}
+              </Box>
+              <Button
+                onClick={handleSubmit(onSubmit)}
+                variant="contained"
+                sx={{
+                  position: "absolute",
+                  bottom: "0px",
+                  right: "0px",
+                  border: "none",
+                  color: "#fff",
+                  background: colors.btn[100],
+                }}
+              >
+                Add note
+              </Button>
+            </FormControl>
+          </form>
         </Box>
       </Modal>
     </Box>

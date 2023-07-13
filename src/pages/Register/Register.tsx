@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Google } from "react-bootstrap-icons";
 import { useState } from "react";
 import {
@@ -9,13 +8,27 @@ import {
   getAuth,
   signInWithPopup,
 } from "firebase/auth";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface IFormInput {
+  email: string;
+  password: string;
+}
 
 export const Register = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [authing, setAuthing] = useState(false);
   const auth = getAuth();
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>();
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    const { email, password } = data;
+    signUp(email, password);
+  };
 
   const signInWithGoogle = async () => {
     setAuthing(true);
@@ -31,8 +44,7 @@ export const Register = () => {
       });
   };
 
-  const signUp = (e: React.FormEvent) => {
-    e.preventDefault();
+  const signUp = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
@@ -41,9 +53,6 @@ export const Register = () => {
       .catch((error) => {
         console.log(error);
       });
-
-    setPassword("");
-    setEmail("");
   };
 
   return (
@@ -53,55 +62,43 @@ export const Register = () => {
         <button
           className="google-btn"
           style={{ border: "1px solid #fff" }}
-          onClick={() => signInWithGoogle()}
+          onClick={signInWithGoogle}
           disabled={authing}
         >
           <Google /> Sign in with Google
         </button>
         <p>or</p>
-        <form onSubmit={signUp}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="register-box-column">
             <input
+              style={{ width: "100%" }}
+              {...register("email", {
+                required: true,
+                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              })}
               className="register-email-input"
               type="email"
               placeholder="Email"
               id="email"
               name="email"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
             />
+            {errors.email && <span className="error">Invalid email</span>}
             <input
+              {...register("password", {
+                required: true,
+                minLength: 6,
+              })}
               className="register-password-input"
               type="password"
               placeholder="Password"
               id="password"
               name="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
             />
-          </div>
-
-          <div className="register-check">
-            <ul className="register-check-list">
-              <li>
-                <CheckCircleIcon style={{ fontSize: "16px" }} />A minimum of 10
-                characters
-              </li>
-              <li>
-                <CheckCircleIcon style={{ fontSize: "16px" }} />
-                At least one lowercase letter
-              </li>
-              <li>
-                <CheckCircleIcon style={{ fontSize: "16px" }} />
-                At least one number
-              </li>
-              <li>
-                <CheckCircleIcon style={{ fontSize: "16px" }} />
-                At least one uppercase letter
-              </li>
-            </ul>
+            {errors.password && (
+              <span className="error">
+                Password must have at least 6 characters
+              </span>
+            )}
           </div>
           <button type="submit" className="register-btn">
             Create account

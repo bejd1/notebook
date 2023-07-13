@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -10,7 +10,7 @@ import EditNoteModal from "./EditNoteModal";
 import { database } from "../../Firebase";
 import { ref, remove } from "firebase/database";
 import copy from "copy-to-clipboard";
-import { Dispatch, SetStateAction } from "react";
+import { DataContext, SearchInputContext } from "../../App";
 
 interface NoteI {
   id: string;
@@ -19,15 +19,11 @@ interface NoteI {
   date: number;
 }
 
-type NoteProps = {
-  setData: Dispatch<SetStateAction<NoteI[]>>;
-  data: NoteI[];
-  searchInput: string;
-};
-
-const Note = ({ setData, data, searchInput }: NoteProps) => {
+const Note = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const { searchInput } = useContext(SearchInputContext);
+  const { data, setData } = useContext(DataContext);
 
   const deleteNote = (id: string) => {
     const noteRef = ref(database, `notes/${id}`);
