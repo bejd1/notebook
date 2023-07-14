@@ -17,41 +17,35 @@ export const Login = () => {
   const navigate = useNavigate();
 
   // login with email and password
-  const login = (e: React.FormEvent<HTMLFormElement>) => {
+  const login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setAuthing(true);
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((response) => {
-        console.log(response.user.uid);
-        navigate("/notebook");
-      })
-      .catch((error) => {
-        console.log(error);
-        setAuthing(false);
-      });
+    try {
+      await signInWithEmailAndPassword(auth, email, password).then(
+        (response) => {
+          console.log(response.user.uid);
+          navigate("/notebook");
+        }
+      );
+    } catch (err) {
+      console.log(err);
+      setAuthing(false);
+    }
   };
+
   // login with google
 
-  const signInWithGoogle = () => {
+  const signInWithGoogle = async () => {
     setAuthing(true);
-
-    signInWithPopup(auth, new GoogleAuthProvider())
-      .then((response) => {
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider()).then((response) => {
         console.log(response.user.uid);
         navigate("/notebook");
-      })
-      .catch((error) => {
-        console.log(error);
-        setAuthing(false);
       });
-  };
-
-  // clear input
-
-  const clearInput = () => {
-    setPassword("");
-    setEmail("");
+    } catch (err) {
+      console.log(err);
+      setAuthing(false);
+    }
   };
 
   return (
@@ -90,7 +84,7 @@ export const Login = () => {
               setPassword(event.target.value);
             }}
           />
-          <button onClick={clearInput} type="submit" className="login-btn">
+          <button type="submit" className="login-btn">
             Log In
           </button>
         </form>

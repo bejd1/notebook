@@ -7,7 +7,7 @@ import { tokens } from "../../Theme";
 import DeleteModal from "./DeleteModal";
 import InfoSnackbar from "./SnackBar";
 import EditNoteModal from "./EditNoteModal";
-import { database } from "../../Firebase";
+import { auth, database } from "../../Firebase";
 import { ref, remove } from "firebase/database";
 import copy from "copy-to-clipboard";
 import { DataContext, SearchInputContext } from "../../App";
@@ -26,7 +26,7 @@ const Note = () => {
   const { data, setData } = useContext(DataContext);
 
   const deleteNote = (id: string) => {
-    const noteRef = ref(database, `notes/${id}`);
+    const noteRef = ref(database, `users/${auth.currentUser?.uid}/items/${id}`);
 
     remove(noteRef)
       .then(() => {

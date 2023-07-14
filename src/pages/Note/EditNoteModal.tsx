@@ -13,7 +13,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { Edit } from "@mui/icons-material";
 import { tokens } from "../../Theme";
-import { database } from "../../Firebase";
+import { auth, database } from "../../Firebase";
 import { ref, update } from "firebase/database";
 import { useForm } from "react-hook-form";
 
@@ -65,7 +65,7 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
   const onSubmit = () => {
     const dateObject = new Date();
     const date = dateObject.toLocaleString("en-US", { timeZone: "CET" });
-    update(ref(database, `notes/${id}`), {
+    update(ref(database, `users/${auth.currentUser?.uid}/items/${id}`), {
       title: editTitle,
       note: editNote,
       date: date,

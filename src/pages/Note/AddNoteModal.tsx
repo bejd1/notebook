@@ -13,7 +13,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { tokens } from "../../Theme";
-import { database } from "../../Firebase";
+import { auth, database } from "../../Firebase";
 import { push, ref } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
@@ -56,7 +56,7 @@ const AddNoteModal = () => {
   };
 
   const onSubmit = (data: IFormInput) => {
-    const noteRef = ref(database, "/notes");
+    const noteRef = ref(database, `users/${auth.currentUser?.uid}/items/`);
     const id = uuidv4();
     const dateObject = new Date();
     const date = dateObject.toLocaleString("en-US", { timeZone: "CET" });
@@ -67,7 +67,6 @@ const AddNoteModal = () => {
       date: date,
     };
     push(noteRef, todo);
-    console.log(date);
 
     // clear inputs and close modal
     reset();

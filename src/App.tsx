@@ -8,7 +8,7 @@ import React, {
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./Theme";
-import { off, onValue, ref } from "firebase/database";
+import { off, onValue, ref, query, orderByChild } from "firebase/database";
 import { auth, database } from "./Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import LoginCard from "./pages/Login/LoginCard";
@@ -17,6 +17,7 @@ import { Home } from "./pages/Home/Home";
 import RegisterCard from "./pages/Register/RegisterCard";
 import Note from "./pages/Note/Note";
 import NoteTools from "./pages/Note/NoteTools";
+// import { getUserId } from "./Firebase"; // Add this import statement
 
 interface DataI {
   data: NoteI[];
@@ -47,22 +48,26 @@ function App() {
   // data
 
   useEffect(() => {
-    const notesRef = ref(database, "notes");
+    if (auth.currentUser?.uid) {
+      const notesRef = ref(database, `users/${auth.currentUser?.uid}/items/`);
+      const notesQuery = query(notesRef, orderByChild("date"));
 
-    const notesListener = onValue(notesRef, (snapshot) => {
-      const notes: NoteI[] = [];
-      snapshot.forEach((childSnapshot) => {
-        const note = childSnapshot.val() as NoteI;
-        note.id = childSnapshot.key as string;
-        notes.push(note);
+      const notesListener = onValue(notesQuery, (snapshot) => {
+        const notes: NoteI[] = [];
+        snapshot.forEach((childSnapshot) => {
+          const note = childSnapshot.val() as NoteI;
+          note.id = childSnapshot.key as string;
+          notes.push(note);
+        });
+        setData(notes);
       });
-      setData(notes);
-    });
 
-    return () => {
-      off(notesRef, "value", notesListener as any);
-    };
-  }, []);
+      return () => {
+        off(notesQuery, "value", notesListener);
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.currentUser?.uid]);
 
   // auth
 
@@ -130,6 +135,7 @@ function App() {
     </div>
   );
 }
+
 export const DataContext = createContext<DataI>({
   data: [],
   setData: () => {},
@@ -139,7 +145,9 @@ export const SearchInputContext = createContext<SearchingInputI>({
   searchInput: "",
   setSearchInput: () => {},
 });
+
 export const AuthContext = createContext<{ authUser: User | null }>({
   authUser: null,
 });
+
 export default App;

@@ -32,27 +32,28 @@ export const Register = () => {
 
   const signInWithGoogle = async () => {
     setAuthing(true);
-
-    signInWithPopup(auth, new GoogleAuthProvider())
-      .then((response) => {
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider()).then((response) => {
         console.log(response.user.uid);
-        navigate("/tools");
-      })
-      .catch((error) => {
-        console.log(error);
-        setAuthing(false);
+        navigate("/notebook");
       });
+    } catch (err) {
+      console.log(err);
+      setAuthing(false);
+    }
   };
 
-  const signUp = (email: string, password: string) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
-        navigate("/tools");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const signUp = async (email: string, password: string) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password).then(
+        (userCredential) => {
+          console.log(userCredential);
+          navigate("/tools");
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
