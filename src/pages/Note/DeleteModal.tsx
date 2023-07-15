@@ -47,7 +47,7 @@ export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={{ ...style, background: colors.color[100] }}>
+        <Box sx={{ ...style, background: colors.secondBackground[100] }}>
           <Typography
             id="modal-modal-title"
             variant="h3"

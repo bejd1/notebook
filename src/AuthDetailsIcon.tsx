@@ -19,6 +19,7 @@ import { signOut } from "firebase/auth";
 
 export default function BasicMenu() {
   const theme = useTheme();
+  // const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

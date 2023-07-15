@@ -1,10 +1,11 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import backgroundImage from "../../img/laptop-lg.jpg";
 import { useContext } from "react";
 import { AuthContext } from "../../App";
 import NoteTools from "../Note/NoteTools";
+import { tokens } from "../../Theme";
 
 interface User {
   email?: string;
@@ -12,6 +13,8 @@ interface User {
 }
 
 export const Home = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const { authUser }: { authUser: User | null } = useContext(AuthContext);
 
   return (
@@ -51,7 +54,7 @@ export const Home = () => {
                 fontWeight: "bold",
                 mb: "40px",
                 fontSize: "50px",
-                color: "#fff",
+                color: colors.secondary[100],
                 textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
               }}
             >
@@ -62,7 +65,7 @@ export const Home = () => {
               sx={{
                 mb: "10px",
                 fontSize: "25px",
-                color: "#fff",
+                color: colors.secondary[100],
                 textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)",
               }}
             >
@@ -72,7 +75,7 @@ export const Home = () => {
               sx={{
                 mb: "10px",
                 fontSize: "20px",
-                color: "#fff",
+                color: colors.secondary[100],
                 textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)",
               }}
             >
@@ -82,7 +85,7 @@ export const Home = () => {
               sx={{
                 mb: "10px",
                 fontSize: "20px",
-                color: "#fff",
+                color: colors.secondary[100],
                 textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)",
               }}
             >
@@ -94,17 +97,19 @@ export const Home = () => {
                   sx={{
                     background: "royalblue",
                     boxShadow: "0 0 10px 5px rgba(0, 0, 0, 0.4)",
+                    color: colors.secondary[100],
                   }}
                 >
                   Sign up Today
                 </Button>
               </Link>
-              <Link to="/tools">
+              <Link to="/login">
                 <Button
                   sx={{
                     background: "royalblue",
                     marginLeft: "20px",
                     boxShadow: "0 0 10px 5px rgba(0, 0, 0, 0.4)",
+                    color: colors.secondary[100],
                   }}
                 >
                   Notes

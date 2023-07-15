@@ -5,68 +5,61 @@ export const tokens = (mode: "light" | "dark") => ({
   ...(mode === "dark"
     ? {
         background: {
-          100: "#1d2021",
+          100: "#000000",
         },
-
         secondary: {
-          100: "#ffffff",
+          100: "#FFFFFF",
         },
-
-        color: {
+        secondBackground: {
           100: "#2b2f30",
         },
-
         green: {
-          100: "#2a7d2a",
+          100: "#21ad21",
         },
         red: {
-          100: "#c73131",
+          100: "#ED4956",
         },
-
         btn: {
-          100: "#4db5da",
+          100: "#4169e1",
         },
       }
     : {
         background: {
-          100: "#fcfcfc",
+          100: "#FFFFFF",
         },
         secondary: {
           100: "#000000",
         },
-        color: {
+        secondBackground: {
           100: "#ffff",
         },
         green: {
-          100: " #09bd09",
+          100: "#21ad21",
         },
         red: {
-          100: "#eb2b2b",
+          100: "#ED4956",
         },
         btn: {
-          100: "#0a66c2",
+          100: "#4169e1",
         },
       }),
 });
-
 export const themeSettings = (mode: "light" | "dark") => {
   const colors = tokens(mode);
   return {
     palette: {
       mode: mode,
       primary: {
-        main: mode === "light" ? "#1d2021" : "#f9f9f9",
+        main: mode === "light" ? "#000" : "#fff",
       },
       secondary: {
         main: colors.secondary[100],
-      },
-      neutral: {
-        dark: colors.secondary[100],
-        main: colors.secondary[100],
-        light: colors.secondary[100],
+        ...(mode === "light" && {
+          input: "red",
+        }),
       },
       background: {
-        default: mode === "dark" ? "#1d2021" : "#ffff",
+        default: mode === "dark" ? "#1D2124" : "#FFFFFF",
       },
     },
     typography: {

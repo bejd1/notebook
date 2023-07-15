@@ -11,13 +11,13 @@ import { ColorModeContext, useMode } from "./Theme";
 import { off, onValue, ref, query, orderByChild } from "firebase/database";
 import { auth, database } from "./Firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import LoginCard from "./pages/Login/LoginCard";
 import { Nav } from "./pages/Nav/Nav";
 import { Home } from "./pages/Home/Home";
-import RegisterCard from "./pages/Register/RegisterCard";
 import Note from "./pages/Note/Note";
 import NoteTools from "./pages/Note/NoteTools";
-// import { getUserId } from "./Firebase"; // Add this import statement
+import { Footer } from "./pages/Footer/Footer";
+import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
 
 interface DataI {
   data: NoteI[];
@@ -46,7 +46,6 @@ function App() {
   const [searchInput, setSearchInput] = useState<string>("");
 
   // data
-
   useEffect(() => {
     if (auth.currentUser?.uid) {
       const notesRef = ref(database, `users/${auth.currentUser?.uid}/items/`);
@@ -70,7 +69,6 @@ function App() {
   }, [auth.currentUser?.uid]);
 
   // auth
-
   const [authUser, setAuthUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -95,6 +93,7 @@ function App() {
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
+        position: "relative",
       }}
     >
       <DataContext.Provider value={{ data, setData }}>
@@ -107,8 +106,8 @@ function App() {
                   <Nav />
                   <Routes>
                     <Route path="/notebook" element={<Home />} />
-                    <Route path="/login" element={<LoginCard />} />
-                    <Route path="/register" element={<RegisterCard />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="/note" element={<Note />} />
                     <Route path="/tools" element={<NoteTools />} />
                     <Route
@@ -125,7 +124,7 @@ function App() {
                       }
                     />
                   </Routes>
-                  {/* <Footer /> */}
+                  <Footer />
                 </BrowserRouter>
               </ThemeProvider>
             </ColorModeContext.Provider>

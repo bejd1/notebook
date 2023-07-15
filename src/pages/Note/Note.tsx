@@ -79,16 +79,22 @@ const Note = () => {
                   maxWidth: "80%",
                   minHeight: 160,
                   marginTop: "50px",
-                  background: colors.color[100],
+                  background: colors.secondBackground[100],
                 }}
               >
-                <CardContent sx={{ p: "20px 25px" }}>
+                <CardContent
+                  sx={{
+                    p: "20px 25px",
+                    background: colors.secondBackground[100],
+                  }}
+                >
                   <Box
                     sx={{
                       position: "absolute",
                       top: "10px",
                       right: "10px",
-                      color: colors.color[100],
+                      color: colors.btn[100],
+                      background: colors.secondBackground[100],
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
@@ -99,7 +105,10 @@ const Note = () => {
                     <DeleteModal deleteNote={deleteNote} id={id} />
                   </Box>
                   <Box>
-                    <Typography variant="h3" sx={{ marginBottom: "20px" }}>
+                    <Typography
+                      variant="h3"
+                      sx={{ marginBottom: "20px", maxWidth: "80%" }}
+                    >
                       {title}
                     </Typography>
                     <Typography>{note}</Typography>

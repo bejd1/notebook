@@ -91,7 +91,7 @@ const AddNoteModal = () => {
             ...style,
             minWidth: "80%",
             minHeight: "300px",
-            background: colors.color[100],
+            background: colors.secondBackground[100],
           }}
         >
           <Button

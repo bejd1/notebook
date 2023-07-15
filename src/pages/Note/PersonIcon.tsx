@@ -2,7 +2,7 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Box, IconButton, ListItemText, useTheme } from "@mui/material";
-import { Person } from "react-bootstrap-icons";
+import PersonIcon from "@mui/icons-material/Person";
 import { Link } from "react-router-dom";
 import { tokens } from "../../Theme";
 
@@ -21,7 +21,7 @@ export default function BasicMenu() {
   return (
     <Box display={{ md: "none", xs: "block" }}>
       <IconButton onClick={handleClick}>
-        <Person />
+        <PersonIcon style={{ color: colors.secondary[100] }} />
       </IconButton>
 
       <Menu

@@ -49,9 +49,9 @@ export const NavRight = () => {
       </Box>
       <IconButton onClick={colorMode.toggleColorMode}>
         {theme.palette.mode === "dark" ? (
-          <LightModeOutlinedIcon />
+          <LightModeOutlinedIcon sx={{ color: colors.secondary[100] }} />
         ) : (
-          <DarkModeOutlinedIcon />
+          <DarkModeOutlinedIcon sx={{ color: colors.secondary[100] }} />
         )}
       </IconButton>
       <PersonIcon />

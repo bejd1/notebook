@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Google } from "react-bootstrap-icons";
-import "./Login.css";
+import Card from "@mui/material/Card";
+import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import {
   GoogleAuthProvider,
@@ -8,8 +9,11 @@ import {
   signInWithPopup,
   getAuth,
 } from "firebase/auth";
+import { tokens } from "../../Theme";
 
-export const Login = () => {
+export default function Login() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authing, setAuthing] = useState(false);
@@ -34,7 +38,6 @@ export const Login = () => {
   };
 
   // login with google
-
   const signInWithGoogle = async () => {
     setAuthing(true);
     try {
@@ -47,53 +50,123 @@ export const Login = () => {
       setAuthing(false);
     }
   };
-
   return (
-    <div className="login-container">
-      <h2>Log Into My Account</h2>
-      <div className="login-box">
-        <button
-          onClick={signInWithGoogle}
-          disabled={authing}
-          className="google-btn"
+    <Box sx={{ minHeight: "100vh" }}>
+      <Card sx={{ width: "520px", marginTop: "140px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
         >
-          <Google />
-          Sign in with Google
-        </button>
-        <form onSubmit={login}>
-          <p>or</p>
-          <input
-            className="login-input"
-            type="text"
-            placeholder="Email or Username"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(event) => {
-              setEmail(event.target.value);
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: "bold",
+              m: "40px 0 20px",
+              color: colors.secondary[100],
             }}
-          />
-          <input
-            className="password-input"
-            placeholder="Password"
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
+          >
+            Log Into My Account
+          </Typography>
+          <Button
+            onClick={signInWithGoogle}
+            disabled={authing}
+            sx={{
+              border: "1px solid",
+              borderColor: colors.secondary[100],
+              width: "80%",
+              mt: "10px",
+              p: "10px 0",
+              color: colors.secondary[100],
             }}
-          />
-          <button type="submit" className="login-btn">
-            Log In
-          </button>
-        </form>
-      </div>
-      <div className="login-register">
-        <Link to="/register" className="login-container-login-btn">
-          Don't have an account?
-        </Link>
-      </div>
-    </div>
+          >
+            <Google style={{ marginRight: "5px" }} /> Sign in with Google
+          </Button>
+          <Typography sx={{ m: "5px 0", color: colors.secondary[100] }}>
+            or
+          </Typography>
+          <form
+            onSubmit={login}
+            style={{
+              width: "80%",
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+              }}
+            >
+              <Box sx={{ mb: "12px" }}>
+                <TextField
+                  autoFocus
+                  type="email"
+                  sx={{
+                    width: "100%",
+                    color: colors.secondary[100],
+                    borderColor: colors.secondary[100],
+                  }}
+                  id="outlined-basic"
+                  label="Email"
+                  variant="outlined"
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
+                />
+              </Box>
+              <Box sx={{ mb: "12px" }}>
+                <TextField
+                  type="password"
+                  sx={{ width: "100%" }}
+                  id="outlined-basic"
+                  label="Password"
+                  variant="outlined"
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
+                />
+              </Box>
+              <Button
+                type="submit"
+                sx={{
+                  border: "1px solid",
+                  borderColor: colors.secondary[100],
+                  width: "100%",
+                  mt: "5px",
+                  p: "10px 0",
+                  color: colors.secondary[100],
+                }}
+              >
+                Log In
+              </Button>
+              <Typography
+                sx={{
+                  m: "10px 0",
+                  fontSize: "13px",
+                  margin: "20px 0",
+                  textAlign: "center",
+                }}
+              >
+                <Link
+                  style={{
+                    marginLeft: "5px",
+                    color: colors.secondary[100],
+                  }}
+                  to="/register"
+                >
+                  Don't have an account?
+                </Link>
+              </Typography>
+            </Box>
+          </form>
+        </Box>
+      </Card>
+    </Box>
   );
-};
+}

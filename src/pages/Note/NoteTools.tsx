@@ -9,7 +9,7 @@ import NoteToolsSort from "./NoteToolsSort";
 import AddNoteModal from "./AddNoteModal";
 import { useContext } from "react";
 import { AuthContext, DataContext, SearchInputContext } from "../../App";
-import { Login } from "../Login/Login";
+import Login from "../Login/Login";
 
 interface User {
   email: string;
@@ -27,7 +27,7 @@ export default function NoteTools() {
       {!authUser ? (
         <Login />
       ) : (
-        <Box width="100%" mt="110px" overflow="hidden">
+        <Box width="100%" mt="110px" overflow="hidden" minHeight="88vh">
           <Typography
             textAlign="center"
             variant="h2"
@@ -54,7 +54,7 @@ export default function NoteTools() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                background: colors.color[100],
+                background: colors.secondBackground[100],
               }}
             >
               <Box
