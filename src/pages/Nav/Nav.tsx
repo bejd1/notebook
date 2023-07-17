@@ -22,22 +22,52 @@ export const Nav = () => {
         justifyContent="space-between"
         alignItems="center"
         width="100%"
-        height="70px"
+        height={{ md: "70px", xs: "60px" }}
       >
-        <Box marginLeft={{ md: "80px", xs: "30px" }}>
+        <Box
+          sx={{
+            marginLeft: {
+              "@media (min-width: 99px)": {
+                marginLeft: "12px",
+              },
+              "@media (min-width: 400px)": {
+                marginLeft: "15px",
+              },
+              "@media (min-width: 600px)": {
+                marginLeft: "15px",
+              },
+              "@media (min-width: 900px)": {
+                marginLeft: "40px",
+              },
+            },
+          }}
+        >
           <Link
             to="/notebook"
             style={{ textDecoration: "none", color: colors.secondary[100] }}
           >
             <Typography
               variant="h2"
+              fontSize={{ xs: "26px", sm: "35px" }}
               sx={{
                 fontFamily: "Spectral SC",
                 display: "flex",
                 gap: "10px",
               }}
             >
-              <MenuBookIcon fontSize="large" sx={{ mb: "5px" }} /> Notebook
+              <MenuBookIcon
+                sx={{
+                  mb: "5px",
+                  fontSize: {
+                    xs: "26px",
+                    sm: "35px",
+                    "@media (max-width: 400px)": {
+                      display: "none",
+                    },
+                  },
+                }}
+              />
+              Notebook
             </Typography>
           </Link>
         </Box>

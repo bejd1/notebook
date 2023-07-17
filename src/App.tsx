@@ -6,7 +6,13 @@ import React, {
   SetStateAction,
 } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  Box,
+  Button,
+  CssBaseline,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import { ColorModeContext, useMode } from "./Theme";
 import { off, onValue, ref, query, orderByChild } from "firebase/database";
 import { auth, database } from "./Firebase";
@@ -86,8 +92,7 @@ function App() {
   }, []);
 
   return (
-    <div
-      className="App"
+    <Box
       style={{
         display: "flex",
         justifyContent: "center",
@@ -113,14 +118,30 @@ function App() {
                     <Route
                       path="*"
                       element={
-                        <div className="page-not-exist">
-                          <h2>This page does not exist</h2>
+                        <Box
+                          sx={{
+                            height: "100vh",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Typography variant="h2">
+                            This page does not exist
+                          </Typography>
                           <Link to="/notebook">
-                            <button className="page-not-exits-btn">
+                            <Button
+                              sx={{
+                                backgroundColor: "#4169e1",
+                                p: "6px 12px",
+                                mt: "10px",
+                              }}
+                            >
                               back to home
-                            </button>
+                            </Button>
                           </Link>
-                        </div>
+                        </Box>
                       }
                     />
                   </Routes>
@@ -131,7 +152,7 @@ function App() {
           </AuthContext.Provider>
         </SearchInputContext.Provider>
       </DataContext.Provider>
-    </div>
+    </Box>
   );
 }
 

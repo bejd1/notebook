@@ -20,7 +20,16 @@ export default function BasicMenu() {
 
   return (
     <Box display={{ md: "none", xs: "block" }}>
-      <IconButton onClick={handleClick}>
+      <IconButton
+        onClick={handleClick}
+        sx={{
+          padding: {
+            "@media (max-width: 450px)": {
+              padding: "5px",
+            },
+          },
+        }}
+      >
         <PersonIcon style={{ color: colors.secondary[100] }} />
       </IconButton>
 

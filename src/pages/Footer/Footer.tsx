@@ -15,10 +15,13 @@ export const Footer = () => {
         justifyContent: "center",
       }}
     >
-      <Typography>
+      <Typography sx={{ fontSize: "14px" }}>
         &copy; {new Date().getFullYear()} Created by
         <a
-          style={{ color: colors.secondary[100], marginLeft: "3px" }}
+          style={{
+            color: colors.secondary[100],
+            marginLeft: "3px",
+          }}
           href="https://www.linkedin.com/in/filip-bajdan-a6393b273/"
         >
           Bejdi

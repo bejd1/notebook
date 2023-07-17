@@ -1,15 +1,25 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Google } from "react-bootstrap-icons";
+// import { Google } from "react-bootstrap-icons";
 import Card from "@mui/material/Card";
-import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { useState } from "react";
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
   getAuth,
+  GithubAuthProvider,
 } from "firebase/auth";
 import { tokens } from "../../Theme";
+import { GitHub } from "@mui/icons-material";
 
 export default function Login() {
   const theme = useTheme();
@@ -50,9 +60,29 @@ export default function Login() {
       setAuthing(false);
     }
   };
+
+  // login with github
+  const signInWithGithub = async () => {
+    try {
+      const response = await signInWithPopup(auth, new GithubAuthProvider());
+      console.log(response.user.uid);
+      navigate("/notebook");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <Box sx={{ minHeight: "100vh" }}>
-      <Card sx={{ width: "520px", marginTop: "140px" }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        width: "520px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card sx={{ width: "100%", mb: "100px" }}>
         <Box
           sx={{
             display: "flex",
@@ -65,29 +95,13 @@ export default function Login() {
             variant="h3"
             sx={{
               fontWeight: "bold",
-              m: "40px 0 20px",
+              m: "40px 0 25px",
               color: colors.secondary[100],
             }}
           >
             Log Into My Account
           </Typography>
-          <Button
-            onClick={signInWithGoogle}
-            disabled={authing}
-            sx={{
-              border: "1px solid",
-              borderColor: colors.secondary[100],
-              width: "80%",
-              mt: "10px",
-              p: "10px 0",
-              color: colors.secondary[100],
-            }}
-          >
-            <Google style={{ marginRight: "5px" }} /> Sign in with Google
-          </Button>
-          <Typography sx={{ m: "5px 0", color: colors.secondary[100] }}>
-            or
-          </Typography>
+
           <form
             onSubmit={login}
             style={{
@@ -112,7 +126,6 @@ export default function Login() {
                     color: colors.secondary[100],
                     borderColor: colors.secondary[100],
                   }}
-                  id="outlined-basic"
                   label="Email"
                   variant="outlined"
                   onChange={(event) => {
@@ -124,7 +137,6 @@ export default function Login() {
                 <TextField
                   type="password"
                   sx={{ width: "100%" }}
-                  id="outlined-basic"
                   label="Password"
                   variant="outlined"
                   onChange={(event) => {
@@ -136,20 +148,21 @@ export default function Login() {
                 type="submit"
                 sx={{
                   border: "1px solid",
-                  borderColor: colors.secondary[100],
                   width: "100%",
                   mt: "5px",
                   p: "10px 0",
-                  color: colors.secondary[100],
+                  color: "#fff",
+                  borderColor: colors.border[100],
+                  backgroundColor: colors.btn[100],
+                  fontWeight: "bold",
                 }}
               >
                 Log In
               </Button>
               <Typography
                 sx={{
-                  m: "10px 0",
                   fontSize: "13px",
-                  margin: "20px 0",
+                  mt: "10px ",
                   textAlign: "center",
                 }}
               >
@@ -165,6 +178,55 @@ export default function Login() {
               </Typography>
             </Box>
           </form>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {/* <Typography sx={{ m: "5px 0" }}>or</Typography> */}
+          <Divider sx={{ width: "80%", mt: "5px" }}>or</Divider>
+          {/* <Button
+            onClick={signInWithGoogle}
+            disabled={authing}
+            sx={{
+              border: "1px solid #fff",
+              width: "80%",
+              m: "5px 0 30px",
+              color: colors.secondary[100],
+              borderColor: colors.secondary[100],
+            }}
+          >
+            <Google style={{ marginRight: "5px" }} /> Sign in with Google
+          </Button> */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <IconButton
+              onClick={signInWithGoogle}
+              style={{ marginBottom: "10px" }}
+              disabled={authing}
+            >
+              <img
+                style={{ height: "30px" }}
+                src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                alt="google logo"
+              />
+            </IconButton>
+            <IconButton
+              onClick={signInWithGithub}
+              style={{ marginBottom: "10px" }}
+            >
+              <GitHub sx={{ color: colors.secondary[100] }} />
+            </IconButton>
+          </Box>
         </Box>
       </Card>
     </Box>

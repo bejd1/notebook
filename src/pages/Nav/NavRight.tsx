@@ -11,13 +11,25 @@ export const NavRight = () => {
   const colorMode = useContext(ColorModeContext);
   return (
     <Box
-      marginRight={{ md: "80px", xs: "30px" }}
       display="flex"
       alignItems="center"
       gap="20px"
       textTransform="uppercase"
       fontWeight="bold"
       letterSpacing="1px"
+      sx={{
+        marginRight: {
+          "@media (min-width: 100px)": {
+            marginRight: "8px",
+          },
+          "@media (min-width: 600px)": {
+            marginRight: "25px",
+          },
+          "@media (min-width: 900px)": {
+            marginRight: "40px",
+          },
+        },
+      }}
     >
       <Box display={{ md: "flex", xs: "none" }} alignItems="center" gap="30px">
         <Typography letterSpacing="1.6" sx={{ color: colors.secondary[100] }}>
@@ -32,11 +44,11 @@ export const NavRight = () => {
           variant="contained"
           sx={{
             disabled: "false",
-            fontWeight: "500",
             letterSpacing: "1.6",
             backgroundColor: colors.btn[100],
             color: "#fff",
             "&:hover": { backgroundColor: "none" },
+            fontWeight: "bold",
           }}
         >
           <Link
@@ -47,14 +59,25 @@ export const NavRight = () => {
           </Link>
         </Button>
       </Box>
-      <IconButton onClick={colorMode.toggleColorMode}>
-        {theme.palette.mode === "dark" ? (
-          <LightModeOutlinedIcon sx={{ color: colors.secondary[100] }} />
-        ) : (
-          <DarkModeOutlinedIcon sx={{ color: colors.secondary[100] }} />
-        )}
-      </IconButton>
-      <PersonIcon />
+      <Box sx={{ display: "flex", alignItems: "center" }} gap={{ xs: "0" }}>
+        <IconButton
+          onClick={colorMode.toggleColorMode}
+          sx={{
+            padding: {
+              "@media (max-width: 450px)": {
+                padding: "5px",
+              },
+            },
+          }}
+        >
+          {theme.palette.mode === "dark" ? (
+            <LightModeOutlinedIcon sx={{ color: colors.secondary[100] }} />
+          ) : (
+            <DarkModeOutlinedIcon sx={{ color: colors.secondary[100] }} />
+          )}
+        </IconButton>
+        <PersonIcon />
+      </Box>
     </Box>
   );
 };

@@ -1,11 +1,12 @@
-import { Box, Button, useTheme } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
-import backgroundImage from "../../img/laptop-lg.jpg";
 import { useContext } from "react";
 import { AuthContext } from "../../App";
 import NoteTools from "../Note/NoteTools";
 import { tokens } from "../../Theme";
+import Balancer from "react-wrap-balancer";
+import notebook from "../../img/laptop-lg.jpg";
+import { useTypewriter } from "react-simple-typewriter";
 
 interface User {
   email?: string;
@@ -16,6 +17,11 @@ export const Home = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { authUser }: { authUser: User | null } = useContext(AuthContext);
+
+  const [text] = useTypewriter({
+    words: ["create...", "copy...", "edit...", "searching..."],
+    loop: 20,
+  });
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -30,10 +36,6 @@ export const Home = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            flexDirection: "column",
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: "cover",
-            boxShadow: "inset 0 0 0 1000px rgba(0, 0, 0, 0.5)",
           }}
         >
           <Box
@@ -42,80 +44,90 @@ export const Home = () => {
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
-              p: "40px 80px",
-              borderRadius: "8px",
-              border: "0.2px solid white",
-              boxShadow: "0 0 10px 5px rgba(0, 0, 0, 0.4)",
+              width: "100%",
+              mb: "120px",
             }}
           >
-            <Typography
-              variant="h2"
-              sx={{
-                fontWeight: "bold",
-                mb: "40px",
-                fontSize: "50px",
-                color: colors.secondary[100],
-                textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              Online notebook
-            </Typography>
+            <Balancer>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontSize: "40px",
+                  fontWeight: "bold",
+                  maxWidth: "600px",
+                }}
+              >
+                Smart and easy to use notebook
+              </Typography>
+              <Typography
+                variant="h3"
+                sx={{
+                  color: colors.secondary[100],
+                  fontWeight: "300",
+                  mt: "10px",
+                  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                Save your notes in one place.
+              </Typography>
+              <Typography
+                variant="h3"
+                sx={{
+                  color: colors.secondary[100],
+                  fontWeight: "300",
+                  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                Easy to {text}
+              </Typography>
 
-            <Typography
-              sx={{
-                mb: "10px",
-                fontSize: "25px",
-                color: colors.secondary[100],
-                textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              SAVE YOUR NOTICE
-            </Typography>
-            <Typography
-              sx={{
-                mb: "10px",
-                fontSize: "20px",
-                color: colors.secondary[100],
-                textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              Sign up for a FREE Grow account
-            </Typography>
-            <Typography
-              sx={{
-                mb: "10px",
-                fontSize: "20px",
-                color: colors.secondary[100],
-                textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              to save and share your notice in one place!
-            </Typography>
-            <Box>
-              <Link to="/register">
+              <Box sx={{ display: "flex", gap: "20px", mt: "20px" }}>
                 <Button
                   sx={{
-                    background: "royalblue",
-                    boxShadow: "0 0 10px 5px rgba(0, 0, 0, 0.4)",
-                    color: colors.secondary[100],
+                    backgroundColor: colors.green[100],
+                    fontWeight: "bold",
+                    p: "6px 12px",
+                    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-                  Sign up Today
+                  <Link
+                    style={{ color: "#fff", textDecoration: "none" }}
+                    to="/register"
+                  >
+                    Create account
+                  </Link>
                 </Button>
-              </Link>
-              <Link to="/login">
                 <Button
                   sx={{
-                    background: "royalblue",
-                    marginLeft: "20px",
-                    boxShadow: "0 0 10px 5px rgba(0, 0, 0, 0.4)",
-                    color: colors.secondary[100],
+                    backgroundColor: colors.btn[100],
+                    fontWeight: "bold",
+                    p: "6px 12px",
+                    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-                  Notes
+                  <Link
+                    style={{ color: "#fff", textDecoration: "none" }}
+                    to="/login"
+                  >
+                    Notes
+                  </Link>
                 </Button>
-              </Link>
-            </Box>
+              </Box>
+            </Balancer>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <img
+              src={notebook}
+              style={{ width: "90%" }}
+              alt="a person who writes a note in a laptop"
+              loading="lazy"
+            />
           </Box>
         </Box>
       )}

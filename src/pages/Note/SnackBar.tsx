@@ -1,8 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
-import { Alert, IconButton, Tooltip } from "@mui/material";
+import { Alert, IconButton, Tooltip, useTheme } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { tokens } from "../../Theme";
 
 interface State extends SnackbarOrigin {
   open: boolean;
@@ -19,6 +20,8 @@ export default function InfoSnackbar({ copyToClipboard }: CopyToClipboardI) {
     horizontal: "center",
   });
   const { vertical, horizontal, open } = state;
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const handleClick = (newState: SnackbarOrigin) => () => {
     setState({ ...newState, open: true });
@@ -35,7 +38,7 @@ export default function InfoSnackbar({ copyToClipboard }: CopyToClipboardI) {
         <IconButton
           onClick={handleClick({ vertical: "top", horizontal: "right" })}
         >
-          <ContentCopyIcon />
+          <ContentCopyIcon style={{ color: colors.secondary[100] }} />
         </IconButton>
       </Tooltip>
     </React.Fragment>

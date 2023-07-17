@@ -77,7 +77,7 @@ const AddNoteModal = () => {
     <Box>
       <Tooltip title="Create new note" sx={{ height: "100%" }}>
         <IconButton onClick={handleOpen}>
-          <AddIcon />
+          <AddIcon style={{ color: colors.secondary[100] }} />
         </IconButton>
       </Tooltip>
       <Modal
@@ -156,6 +156,7 @@ const AddNoteModal = () => {
                   border: "none",
                   color: "#fff",
                   background: colors.btn[100],
+                  fontWeight: "bold",
                 }}
               >
                 Add note

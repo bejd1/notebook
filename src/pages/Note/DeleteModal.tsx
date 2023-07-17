@@ -38,7 +38,7 @@ export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
     <div>
       <Tooltip title="Delete">
         <IconButton onClick={handleOpen}>
-          <DeleteIcon />
+          <DeleteIcon style={{ color: colors.secondary[100] }} />
         </IconButton>
       </Tooltip>
       <Modal
@@ -72,6 +72,7 @@ export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
                 border: "none",
                 backgroundColor: colors.green[100],
                 color: "white",
+                fontWeight: "bold",
               }}
             >
               Yes
@@ -84,6 +85,7 @@ export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
                 border: "none",
                 backgroundColor: colors.red[100],
                 color: "white",
+                fontWeight: "bold",
               }}
             >
               No

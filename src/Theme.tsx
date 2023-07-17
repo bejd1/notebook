@@ -22,6 +22,9 @@ export const tokens = (mode: "light" | "dark") => ({
         btn: {
           100: "#4169e1",
         },
+        border: {
+          100: "#1e1e1e",
+        },
       }
     : {
         background: {
@@ -42,6 +45,9 @@ export const tokens = (mode: "light" | "dark") => ({
         btn: {
           100: "#4169e1",
         },
+        border: {
+          100: "#fff",
+        },
       }),
 });
 export const themeSettings = (mode: "light" | "dark") => {
@@ -59,7 +65,7 @@ export const themeSettings = (mode: "light" | "dark") => {
         }),
       },
       background: {
-        default: mode === "dark" ? "#1D2124" : "#FFFFFF",
+        default: mode === "dark" ? "#1D2124" : "#F9F9F9",
       },
     },
     typography: {

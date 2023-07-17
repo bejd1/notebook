@@ -8,9 +8,9 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { Person } from "react-bootstrap-icons";
+import PersonIcon from "@mui/icons-material/Person";
 import { useContext } from "react";
-import { ColorModeContext } from "./Theme";
+import { ColorModeContext, tokens } from "./Theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -19,7 +19,7 @@ import { signOut } from "firebase/auth";
 
 export default function BasicMenu() {
   const theme = useTheme();
-  // const colors = tokens(theme.palette.mode);
+  const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -41,7 +41,7 @@ export default function BasicMenu() {
   return (
     <Box>
       <IconButton onClick={handleClick}>
-        <Person />
+        <PersonIcon style={{ color: colors.secondary[100] }} />
       </IconButton>
 
       <Menu

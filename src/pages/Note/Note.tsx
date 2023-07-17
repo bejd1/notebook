@@ -10,7 +10,8 @@ import EditNoteModal from "./EditNoteModal";
 import { auth, database } from "../../Firebase";
 import { ref, remove } from "firebase/database";
 import copy from "copy-to-clipboard";
-import { DataContext, SearchInputContext } from "../../App";
+import { AuthContext, DataContext, SearchInputContext } from "../../App";
+import NoteTools from "./NoteTools";
 
 interface NoteI {
   id: string;
@@ -19,11 +20,17 @@ interface NoteI {
   date: number;
 }
 
+interface User {
+  email?: string;
+  displayName?: string;
+}
+
 const Note = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { searchInput } = useContext(SearchInputContext);
   const { data, setData } = useContext(DataContext);
+  const { authUser }: { authUser: User | null } = useContext(AuthContext);
 
   const deleteNote = (id: string) => {
     const noteRef = ref(database, `users/${auth.currentUser?.uid}/items/${id}`);
@@ -48,6 +55,7 @@ const Note = () => {
         mb: "100px",
       }}
     >
+      {!authUser ? <NoteTools /> : ""}
       {data.length === 0 ? (
         <Typography variant="h3" sx={{ mt: "50px" }}>
           Your notes are empty.
@@ -111,7 +119,9 @@ const Note = () => {
                     >
                       {title}
                     </Typography>
-                    <Typography>{note}</Typography>
+                    <Typography style={{ whiteSpace: "pre-line" }}>
+                      {note}
+                    </Typography>
                   </Box>
                   <Box
                     sx={{ position: "absolute", bottom: "10px", right: "10px" }}
