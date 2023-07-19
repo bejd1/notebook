@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
@@ -10,12 +10,15 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
-import { Edit } from "@mui/icons-material";
 import { tokens } from "../../Theme";
 import { auth, database } from "../../Firebase";
-import { ref, update } from "firebase/database";
+import { push, ref } from "firebase/database";
+import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
+import ErrorIcon from "@mui/icons-material/Error";
+import { IFormInput } from "../../types/types";
 
 const style = {
   position: "absolute" as "absolute",
@@ -28,22 +31,8 @@ const style = {
   pb: 3,
 };
 
-interface EditI {
-  note: string;
-  title: string;
-  id: string;
-}
-
-interface IEditFormInput {
-  title: string;
-  note: string;
-  example: string;
-}
-
-const EditNoteModal = ({ title, note, id }: EditI) => {
-  const [open, setOpen] = useState(false);
-  const [editTitle, setEditTitle] = useState<string>(title);
-  const [editNote, setEditNote] = useState<string>(note);
+const AddNoteModal = () => {
+  const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -52,7 +41,7 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IEditFormInput>();
+  } = useForm<IFormInput>();
 
   const handleOpen = () => {
     setOpen(true);
@@ -62,23 +51,29 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
     setOpen(false);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (data: IFormInput) => {
+    const noteRef = ref(database, `users/${auth.currentUser?.uid}/items/`);
+    const id = uuidv4();
     const dateObject = new Date();
     const date = dateObject.toLocaleString("en-US", { timeZone: "CET" });
-    update(ref(database, `users/${auth.currentUser?.uid}/items/${id}`), {
-      title: editTitle,
-      note: editNote,
+    const todo = {
+      id: id,
+      title: data.title,
+      note: data.note,
       date: date,
-    });
+    };
+    push(noteRef, todo);
+
+    // clear inputs and close modal
     reset();
-    handleClose();
+    setOpen(false);
   };
 
   return (
     <Box>
-      <Tooltip title="Edit note">
+      <Tooltip title="Create new note" sx={{ height: "100%" }}>
         <IconButton onClick={handleOpen}>
-          <Edit style={{ color: colors.secondary[100] }} />
+          <AddIcon style={{ color: colors.secondary[100] }} />
         </IconButton>
       </Tooltip>
       <Modal
@@ -101,7 +96,8 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
           >
             <CloseIcon />
           </Button>
-          <h2 id="parent-modal-title">Edit note</h2>
+          <h2 id="parent-modal-title">Add new note</h2>
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl fullWidth>
               <TextField
@@ -109,20 +105,32 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
                   required: true,
                   minLength: 3,
                 })}
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
                 fullWidth
                 label="Title"
                 sx={{ mb: "8px" }}
               />
               {errors?.title?.type === "required" && (
-                <Typography sx={{ color: "#ff3333" }}>
-                  This field is required
+                <Typography
+                  sx={{
+                    color: "#ff3333",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1px",
+                  }}
+                >
+                  <ErrorIcon /> This field is required
                 </Typography>
               )}
               {errors?.title?.type === "minLength" && (
-                <Typography sx={{ color: "#ff3333" }}>
-                  The minimum number of characters is 3.
+                <Typography
+                  sx={{
+                    color: "#ff3333",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1px",
+                  }}
+                >
+                  <ErrorIcon /> The minimum number of characters is 3.
                 </Typography>
               )}
               <TextField
@@ -130,8 +138,6 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
                   required: true,
                   minLength: 3,
                 })}
-                value={editNote}
-                onChange={(e) => setEditNote(e.target.value)}
                 id="outlined-multiline-static"
                 label="Note"
                 multiline
@@ -140,18 +146,34 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
               />
               <Box sx={{ height: "60px" }}>
                 {errors?.note?.type === "minLength" && (
-                  <Typography sx={{ color: "#ff3333", mt: "8px" }}>
-                    The minimum number of characters is 3.
+                  <Typography
+                    sx={{
+                      color: "#ff3333",
+                      m: "8px 0",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1px",
+                    }}
+                  >
+                    <ErrorIcon /> The minimum number of characters is 3.
                   </Typography>
                 )}
                 {errors?.note?.type === "required" && (
-                  <Typography sx={{ color: "#ff3333", mt: "8px" }}>
-                    This field is required
+                  <Typography
+                    sx={{
+                      color: "#ff3333",
+                      m: "8px 0",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1px",
+                    }}
+                  >
+                    <ErrorIcon /> This field is required
                   </Typography>
                 )}
               </Box>
               <Button
-                type="submit"
+                onClick={handleSubmit(onSubmit)}
                 variant="contained"
                 sx={{
                   position: "absolute",
@@ -159,11 +181,12 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
                   right: "0px",
                   border: "none",
                   color: "#fff",
-                  background: colors.btn[100],
+                  background: colors.blue[100],
                   fontWeight: "bold",
+                  "&:hover": { backgroundColor: colors.blueHover[100] },
                 }}
               >
-                Edit
+                Add note
               </Button>
             </FormControl>
           </form>
@@ -173,4 +196,4 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
   );
 };
 
-export default EditNoteModal;
+export default AddNoteModal;

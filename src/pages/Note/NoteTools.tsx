@@ -6,7 +6,7 @@ import { InputBase, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Note from "./Note";
 import NoteToolsSort from "./NoteToolsSort";
-import AddNoteModal from "./AddNoteModal";
+import AddNoteModal from "../Components/AddNoteModal";
 import { useContext } from "react";
 import { AuthContext, DataContext, SearchInputContext } from "../../App";
 import Login from "../Login/Login";

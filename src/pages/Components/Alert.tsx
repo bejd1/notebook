@@ -1,6 +1,6 @@
 import Alert from "@mui/material/Alert";
 
-interface AlertProp {
+export interface AlertProp {
   text: string;
 }
 

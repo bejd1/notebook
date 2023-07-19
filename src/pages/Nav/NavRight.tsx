@@ -2,9 +2,10 @@ import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import PersonIcon from "../Note/PersonIcon";
+import PersonIcon from "../Components/PersonIcon";
 import { ColorModeContext, tokens } from "../../Theme";
 import { useContext } from "react";
+
 export const NavRight = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -45,10 +46,10 @@ export const NavRight = () => {
           sx={{
             disabled: "false",
             letterSpacing: "1.6",
-            backgroundColor: colors.btn[100],
-            color: "#fff",
-            "&:hover": { backgroundColor: "none" },
+            backgroundColor: colors.blue[100],
             fontWeight: "bold",
+            color: "#fff",
+            "&:hover": { backgroundColor: colors.blueHover[100] },
           }}
         >
           <Link
@@ -76,6 +77,7 @@ export const NavRight = () => {
             <DarkModeOutlinedIcon sx={{ color: colors.secondary[100] }} />
           )}
         </IconButton>
+        {/* icon menu */}
         <PersonIcon />
       </Box>
     </Box>

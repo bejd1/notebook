@@ -65,6 +65,7 @@
   "devDependencies": {
     "@types/firebase": "^3.2.1",
     "@types/react-beautiful-dnd": "^13.1.4",
-    "@types/uuid": "^9.0.2"
+    "@types/uuid": "^9.0.2",
+    "file-loader": "^6.2.0"
   }
 }

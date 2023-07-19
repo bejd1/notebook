@@ -4,26 +4,15 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box, useTheme } from "@mui/material";
 import { tokens } from "../../Theme";
-import DeleteModal from "./DeleteModal";
-import InfoSnackbar from "./SnackBar";
-import EditNoteModal from "./EditNoteModal";
+import DeleteModal from "../Components/DeleteModal";
+import InfoSnackbar from "../Components/SnackBar";
+import EditNoteModal from "../Components/EditNoteModal";
 import { auth, database } from "../../Firebase";
 import { ref, remove } from "firebase/database";
 import copy from "copy-to-clipboard";
 import { AuthContext, DataContext, SearchInputContext } from "../../App";
 import NoteTools from "./NoteTools";
-
-interface NoteI {
-  id: string;
-  title: string;
-  note: string;
-  date: number;
-}
-
-interface User {
-  email?: string;
-  displayName?: string;
-}
+import { NoteI, User } from "../../types/types";
 
 const Note = () => {
   const theme = useTheme();
@@ -101,7 +90,7 @@ const Note = () => {
                       position: "absolute",
                       top: "10px",
                       right: "10px",
-                      color: colors.btn[100],
+                      color: colors.blue[100],
                       background: colors.secondBackground[100],
                       display: "flex",
                       justifyContent: "center",

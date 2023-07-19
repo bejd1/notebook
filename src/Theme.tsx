@@ -16,11 +16,20 @@ export const tokens = (mode: "light" | "dark") => ({
         green: {
           100: "#21ad21",
         },
-        red: {
-          100: "#ED4956",
+        greenHover: {
+          100: "#197719",
         },
-        btn: {
+        red: {
+          100: "#d11e2d",
+        },
+        redHover: {
+          100: "#9d0511",
+        },
+        blue: {
           100: "#4169e1",
+        },
+        blueHover: {
+          100: "#2448b1",
         },
         border: {
           100: "#1e1e1e",
@@ -39,11 +48,20 @@ export const tokens = (mode: "light" | "dark") => ({
         green: {
           100: "#21ad21",
         },
-        red: {
-          100: "#ED4956",
+        greenHover: {
+          100: "#197719",
         },
-        btn: {
+        red: {
+          100: "#d11e2d",
+        },
+        redHover: {
+          100: "#9d0511",
+        },
+        blue: {
           100: "#4169e1",
+        },
+        blueHover: {
+          100: "#2448b1",
         },
         border: {
           100: "#fff",

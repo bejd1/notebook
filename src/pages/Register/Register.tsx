@@ -1,9 +1,18 @@
 import Card from "@mui/material/Card";
-import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
-import { Google } from "react-bootstrap-icons";
+import ErrorIcon from "@mui/icons-material/Error";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
+  GithubAuthProvider,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
@@ -11,6 +20,7 @@ import {
 } from "firebase/auth";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { tokens } from "../../Theme";
+import { GitHub } from "@mui/icons-material";
 
 interface IFormInput {
   email: string;
@@ -62,17 +72,35 @@ export default function Register() {
     }
   };
 
+  // login with github
+  const signInWithGithub = async () => {
+    try {
+      const response = await signInWithPopup(auth, new GithubAuthProvider());
+      console.log(response.user.uid);
+      navigate("/notebook");
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        height: "100vh",
         width: "520px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Card sx={{ width: "100%", mb: "100px" }}>
+      <Card
+        sx={{
+          width: "100%",
+          margin: "0 20px",
+          mb: { md: "100px", xs: "30px" },
+          mt: "55px",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -83,7 +111,11 @@ export default function Register() {
         >
           <Typography
             variant="h3"
-            sx={{ fontWeight: "bold", m: "40px 0 25px" }}
+            sx={{
+              fontWeight: "bold",
+              m: "40px 20px 25px",
+              textAlign: "center",
+            }}
           >
             Start save notice for free
           </Typography>
@@ -117,10 +149,17 @@ export default function Register() {
                 />
                 {errors.email && (
                   <Typography
-                    sx={{ p: "0", mt: "12px", color: "#ff3333" }}
+                    sx={{
+                      p: "0",
+                      mt: "8px",
+                      color: "#ff3333",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1px",
+                    }}
                     className="error"
                   >
-                    Invalid email
+                    <ErrorIcon /> Invalid email
                   </Typography>
                 )}
               </Box>
@@ -137,10 +176,17 @@ export default function Register() {
                 />
                 {errors.password && (
                   <Typography
-                    sx={{ p: "0", mt: "12px", color: "#ff3333" }}
+                    sx={{
+                      p: "0",
+                      mt: "8px",
+                      color: "#ff3333",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1px",
+                    }}
                     className="error"
                   >
-                    Password must have at least 6 characters
+                    <ErrorIcon /> Password must have at least 6 characters
                   </Typography>
                 )}
               </Box>
@@ -153,8 +199,9 @@ export default function Register() {
                   p: "10px 0",
                   color: "#fff",
                   borderColor: colors.border[100],
-                  backgroundColor: colors.btn[100],
+                  backgroundColor: colors.blue[100],
                   fontWeight: "bold",
+                  "&:hover": { backgroundColor: colors.blueHover[100] },
                 }}
               >
                 Create account
@@ -185,20 +232,32 @@ export default function Register() {
             alignItems: "center",
           }}
         >
-          <Typography sx={{ m: "5px 0" }}>or</Typography>
-          <Button
-            onClick={signInWithGoogle}
-            disabled={authing}
+          <Divider sx={{ width: "80%", mt: "5px" }}>or</Divider>
+          <Box
             sx={{
-              border: "1px solid #fff",
-              width: "80%",
-              m: "5px 0 30px",
-              color: colors.secondary[100],
-              borderColor: colors.secondary[100],
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Google style={{ marginRight: "5px" }} /> Sign up with Google
-          </Button>
+            <IconButton
+              onClick={signInWithGoogle}
+              style={{ marginBottom: "10px" }}
+              disabled={authing}
+            >
+              <img
+                style={{ height: "30px" }}
+                src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                alt="google logo"
+              />
+            </IconButton>
+            <IconButton
+              onClick={signInWithGithub}
+              style={{ marginBottom: "10px" }}
+            >
+              <GitHub sx={{ color: colors.secondary[100] }} />
+            </IconButton>
+          </Box>
         </Box>
       </Card>
     </Box>

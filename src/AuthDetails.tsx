@@ -18,16 +18,33 @@ const AuthDetails = () => {
     <Box>
       {authUser ? (
         <Box
-          style={{
+          sx={{
             display: "flex",
-            marginRight: "30px",
-            gap: "20px",
+            marginRight: {
+              "@media (min-width: 700px)": {
+                marginRight: "30px",
+              },
+              "@media (max-width: 699px)": {
+                marginRight: "6px",
+              },
+            },
+            gap: "10px",
             alignItems: "center",
           }}
         >
-          <Typography style={{ color: colors.secondary[100] }}>{`Signed In as ${
+          <Typography
+            sx={{
+              color: colors.secondary[100],
+              display: {
+                "@media (max-width: 700px)": {
+                  display: "none",
+                },
+              },
+            }}
+          >{`Signed In as ${
             typeof authUser === "string" ? "Unknown User" : authUser.email
           }`}</Typography>
+          {/* menu */}
           <AuthDetailsIcon />
         </Box>
       ) : (

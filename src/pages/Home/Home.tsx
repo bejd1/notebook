@@ -4,14 +4,9 @@ import { useContext } from "react";
 import { AuthContext } from "../../App";
 import NoteTools from "../Note/NoteTools";
 import { tokens } from "../../Theme";
-import Balancer from "react-wrap-balancer";
-import notebook from "../../img/laptop-lg.jpg";
+import notebook from "../../img/laptop-lg.png";
 import { useTypewriter } from "react-simple-typewriter";
-
-interface User {
-  email?: string;
-  displayName?: string;
-}
+import { User } from "../../types/types";
 
 export const Home = () => {
   const theme = useTheme();
@@ -36,24 +31,30 @@ export const Home = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // flexDirection: "column",
+            flexDirection: {
+              lg: "row",
+              xs: "column",
+            },
           }}
         >
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
               flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: { xs: "center", md: "left" },
               width: "100%",
-              mb: "120px",
+              mb: { lg: "150px", md: "0" },
+              mt: { xs: "0", md: "70px" },
+              ml: { lg: "40px" },
             }}
           >
-            <Balancer>
+            <Box>
               <Typography
                 variant="h2"
                 sx={{
-                  fontSize: "40px",
+                  fontSize: { xs: "40px", md: "50px" },
                   fontWeight: "bold",
                   maxWidth: "600px",
                 }}
@@ -63,6 +64,7 @@ export const Home = () => {
               <Typography
                 variant="h3"
                 sx={{
+                  fontSize: { xs: "24px", md: "27px" },
                   color: colors.secondary[100],
                   fontWeight: "300",
                   mt: "10px",
@@ -74,6 +76,7 @@ export const Home = () => {
               <Typography
                 variant="h3"
                 sx={{
+                  fontSize: { xs: "24px", md: "27px" },
                   color: colors.secondary[100],
                   fontWeight: "300",
                   textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
@@ -82,28 +85,37 @@ export const Home = () => {
                 Easy to {text}
               </Typography>
 
-              <Box sx={{ display: "flex", gap: "20px", mt: "20px" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "20px",
+                  mt: "20px",
+                  justifyContent: { xs: "center", md: "left" },
+                }}
+              >
                 <Button
                   sx={{
                     backgroundColor: colors.green[100],
                     fontWeight: "bold",
                     p: "6px 12px",
                     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
+                    "&:hover": { backgroundColor: colors.greenHover[100] },
                   }}
                 >
                   <Link
                     style={{ color: "#fff", textDecoration: "none" }}
                     to="/register"
                   >
-                    Create account
+                    Sing up for free!
                   </Link>
                 </Button>
                 <Button
                   sx={{
-                    backgroundColor: colors.btn[100],
+                    backgroundColor: colors.blue[100],
                     fontWeight: "bold",
                     p: "6px 12px",
                     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
+                    "&:hover": { backgroundColor: colors.blueHover[100] },
                   }}
                 >
                   <Link
@@ -114,18 +126,31 @@ export const Home = () => {
                   </Link>
                 </Button>
               </Box>
-            </Balancer>
+            </Box>
           </Box>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              width: "100%",
+              justifyContent: {
+                lg: "left",
+                xs: "center",
+              },
+              width: {
+                xs: "85%",
+                sm: "70%",
+                lg: "95%",
+              },
+              mt: { xs: "30px", lg: "0" },
+              marginRight: { lg: "80px" },
             }}
           >
             <img
               src={notebook}
-              style={{ width: "90%" }}
+              style={{
+                width: "100%",
+                borderRadius: "12px",
+              }}
               alt="a person who writes a note in a laptop"
               loading="lazy"
             />

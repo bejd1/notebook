@@ -73,6 +73,7 @@ export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
                 backgroundColor: colors.green[100],
                 color: "white",
                 fontWeight: "bold",
+                "&:hover": { backgroundColor: colors.greenHover[100] },
               }}
             >
               Yes
@@ -86,6 +87,7 @@ export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
                 backgroundColor: colors.red[100],
                 color: "white",
                 fontWeight: "bold",
+                "&:hover": { backgroundColor: colors.redHover[100] },
               }}
             >
               No

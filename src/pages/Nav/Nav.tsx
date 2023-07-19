@@ -15,6 +15,7 @@ export const Nav = () => {
         position: "fixed",
         top: "0",
         zIndex: "3",
+        mb: "70px",
       }}
     >
       <Box

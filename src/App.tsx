@@ -24,17 +24,11 @@ import NoteTools from "./pages/Note/NoteTools";
 import { Footer } from "./pages/Footer/Footer";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
+import { NoteI } from "./types/types";
 
 interface DataI {
   data: NoteI[];
   setData: Dispatch<SetStateAction<NoteI[]>>;
-}
-
-interface NoteI {
-  id: string;
-  title: string;
-  note: string;
-  date: number;
 }
 
 interface User {

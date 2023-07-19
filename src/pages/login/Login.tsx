@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-// import { Google } from "react-bootstrap-icons";
 import Card from "@mui/material/Card";
 import {
   Box,
@@ -75,14 +74,21 @@ export default function Login() {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        height: "100vh",
         width: "520px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Card sx={{ width: "100%", mb: "100px" }}>
+      <Card
+        sx={{
+          width: "100%",
+          margin: "0 20px",
+          mb: { md: "100px", xs: "30px" },
+          mt: "55px",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -95,9 +101,10 @@ export default function Login() {
             variant="h3"
             sx={{
               fontWeight: "bold",
-              m: "40px 0 25px",
+              m: "40px 20px 25px",
               color: colors.secondary[100],
             }}
+            textAlign="center"
           >
             Log Into My Account
           </Typography>
@@ -153,8 +160,9 @@ export default function Login() {
                   p: "10px 0",
                   color: "#fff",
                   borderColor: colors.border[100],
-                  backgroundColor: colors.btn[100],
+                  backgroundColor: colors.blue[100],
                   fontWeight: "bold",
+                  "&:hover": { backgroundColor: colors.blueHover[100] },
                 }}
               >
                 Log In
@@ -187,21 +195,7 @@ export default function Login() {
             alignItems: "center",
           }}
         >
-          {/* <Typography sx={{ m: "5px 0" }}>or</Typography> */}
           <Divider sx={{ width: "80%", mt: "5px" }}>or</Divider>
-          {/* <Button
-            onClick={signInWithGoogle}
-            disabled={authing}
-            sx={{
-              border: "1px solid #fff",
-              width: "80%",
-              m: "5px 0 30px",
-              color: colors.secondary[100],
-              borderColor: colors.secondary[100],
-            }}
-          >
-            <Google style={{ marginRight: "5px" }} /> Sign in with Google
-          </Button> */}
           <Box
             sx={{
               display: "flex",
