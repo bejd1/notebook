@@ -7,6 +7,7 @@ import {
   ListItemText,
   Tooltip,
   useTheme,
+  Box,
 } from "@mui/material";
 import SortIcon from "@mui/icons-material/Sort";
 import CallMadeIcon from "@mui/icons-material/CallMade";
@@ -55,9 +56,9 @@ export default function BasicMenu({ setData, data }: NoteProps) {
   };
 
   return (
-    <div>
+    <Box sx={{ ml: "10px" }}>
       <Tooltip title="Sort by">
-        <IconButton onClick={handleClick}>
+        <IconButton onClick={handleClick} sx={{ p: { xs: "5px", sm: "8px" } }}>
           <SortIcon style={{ color: colors.secondary[100] }} />
         </IconButton>
       </Tooltip>
@@ -93,6 +94,6 @@ export default function BasicMenu({ setData, data }: NoteProps) {
           </ListItemText>
         </MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 }

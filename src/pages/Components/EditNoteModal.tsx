@@ -78,7 +78,7 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
   return (
     <Box>
       <Tooltip title="Edit note">
-        <IconButton onClick={handleOpen}>
+        <IconButton onClick={handleOpen} sx={{ p: { xs: "5px", sm: "8px" } }}>
           <Edit style={{ color: colors.secondary[100] }} />
         </IconButton>
       </Tooltip>

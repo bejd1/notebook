@@ -49,7 +49,8 @@ export default function NoteTools() {
           >
             <Card
               sx={{
-                minWidth: "80%",
+                minWidth: { xs: "90%", sm: "80%" },
+                m: "0 20px",
                 minHeight: "80px",
                 display: "flex",
                 alignItems: "center",
@@ -61,21 +62,22 @@ export default function NoteTools() {
                 sx={{
                   border: `1px solid ${colors.secondary[100]}`,
                   borderRadius: "8px",
-                  marginLeft: "20px",
+                  ml: { xs: "10px", sm: "20px" },
+                  mr: { xs: "10px", sm: "0" },
                   display: "flex",
                   alignItems: "center",
                 }}
               >
                 <InputBase
                   onChange={(e) => setSearchInput(e.target.value)}
-                  sx={{ ml: 2, flex: 1 }}
+                  sx={{ ml: 2, flex: 1, fontSize: { xs: "14px", sm: "16px" } }}
                   placeholder="Search"
                 />
                 <SearchIcon sx={{ m: 1 }} />
               </Box>
               <Box
                 sx={{
-                  marginRight: "20px",
+                  marginRight: { xs: "10px", sm: "20px" },
                   display: "flex",
                   alignItems: "center",
                 }}

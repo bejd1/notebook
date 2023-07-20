@@ -25,7 +25,7 @@ export const Home = () => {
       ) : (
         <Box
           sx={{
-            height: "100vh",
+            minHeight: "100vh",
             width: "100%",
             position: "relative",
             display: "flex",
@@ -46,15 +46,15 @@ export const Home = () => {
               textAlign: { xs: "center", md: "left" },
               width: "100%",
               mb: { lg: "150px", md: "0" },
-              mt: { xs: "0", md: "70px" },
+              mt: { xs: "0", md: "90px" },
               ml: { lg: "40px" },
             }}
           >
-            <Box>
+            <Box p=" 0 20px">
               <Typography
                 variant="h2"
                 sx={{
-                  fontSize: { xs: "40px", md: "50px" },
+                  fontSize: { sx: "35px", sm: "40px", md: "50px" },
                   fontWeight: "bold",
                   maxWidth: "600px",
                 }}
@@ -64,7 +64,7 @@ export const Home = () => {
               <Typography
                 variant="h3"
                 sx={{
-                  fontSize: { xs: "24px", md: "27px" },
+                  fontSize: { sx: "18", sm: "24px", md: "27px" },
                   color: colors.secondary[100],
                   fontWeight: "300",
                   mt: "10px",
@@ -76,7 +76,7 @@ export const Home = () => {
               <Typography
                 variant="h3"
                 sx={{
-                  fontSize: { xs: "24px", md: "27px" },
+                  fontSize: { sx: "18", sm: "24px", md: "27px" },
                   color: colors.secondary[100],
                   fontWeight: "300",
                   textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
@@ -88,9 +88,9 @@ export const Home = () => {
               <Box
                 sx={{
                   display: "flex",
+                  justifyContent: { xs: "center", md: "left" },
                   gap: "20px",
                   mt: "20px",
-                  justifyContent: { xs: "center", md: "left" },
                 }}
               >
                 <Button
@@ -98,6 +98,7 @@ export const Home = () => {
                     backgroundColor: colors.green[100],
                     fontWeight: "bold",
                     p: "6px 12px",
+                    fontSize: { xs: "12px", sm: "14px" },
                     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
                     "&:hover": { backgroundColor: colors.greenHover[100] },
                   }}
@@ -114,6 +115,7 @@ export const Home = () => {
                     backgroundColor: colors.blue[100],
                     fontWeight: "bold",
                     p: "6px 12px",
+                    fontSize: { xs: "12px", sm: "14px" },
                     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
                     "&:hover": { backgroundColor: colors.blueHover[100] },
                   }}

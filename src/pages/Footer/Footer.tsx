@@ -13,9 +13,10 @@ export const Footer = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        pt: { md: "10px", lg: "0" },
       }}
     >
-      <Typography sx={{ fontSize: "14px" }}>
+      <Typography sx={{ fontSize: "14px", mt: { md: "40px", lg: "0" } }}>
         &copy; {new Date().getFullYear()} Created by
         <a
           style={{

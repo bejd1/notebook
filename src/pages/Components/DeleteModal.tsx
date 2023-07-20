@@ -37,7 +37,7 @@ export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
   return (
     <div>
       <Tooltip title="Delete">
-        <IconButton onClick={handleOpen}>
+        <IconButton onClick={handleOpen} sx={{ p: { xs: "5px", sm: "8px" } }}>
           <DeleteIcon style={{ color: colors.secondary[100] }} />
         </IconButton>
       </Tooltip>

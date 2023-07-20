@@ -36,6 +36,7 @@ export default function InfoSnackbar({ copyToClipboard }: CopyToClipboardI) {
     <React.Fragment>
       <Tooltip title="Copy">
         <IconButton
+          sx={{ p: { xs: "5px", sm: "8px" } }}
           onClick={handleClick({ vertical: "top", horizontal: "right" })}
         >
           <ContentCopyIcon style={{ color: colors.secondary[100] }} />
@@ -45,18 +46,26 @@ export default function InfoSnackbar({ copyToClipboard }: CopyToClipboardI) {
   );
 
   return (
-    <Box>
+    <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
       {buttons}
       <Snackbar
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={4000}
         onClose={handleClose}
         anchorOrigin={{ vertical, horizontal }}
       >
         <Alert
           onClose={handleClose}
           severity="success"
-          sx={{ width: "100%", mt: "38px", mr: "20px" }}
+          variant="filled"
+          sx={{
+            width: "100%",
+            mt: { xs: "45px", sm: "38px" },
+            mr: { xs: "0", sm: "20px" },
+            backgroundColor: colors.green[100],
+            color: "#fff",
+            fontWeight: "bold",
+          }}
         >
           You copied your note.
         </Alert>

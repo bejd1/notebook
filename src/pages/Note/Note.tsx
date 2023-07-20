@@ -13,6 +13,7 @@ import copy from "copy-to-clipboard";
 import { AuthContext, DataContext, SearchInputContext } from "../../App";
 import NoteTools from "./NoteTools";
 import { NoteI, User } from "../../types/types";
+import ToolsMenu from "../Components/ToolsMenu";
 
 const Note = () => {
   const theme = useTheme();
@@ -72,8 +73,8 @@ const Note = () => {
                 key={id}
                 sx={{
                   position: "relative",
-                  minWidth: "80%",
-                  maxWidth: "80%",
+                  minWidth: { xs: "90%", sm: "80%" },
+                  m: "0 20px",
                   minHeight: 160,
                   marginTop: "50px",
                   background: colors.secondBackground[100],
@@ -81,7 +82,7 @@ const Note = () => {
               >
                 <CardContent
                   sx={{
-                    p: "20px 25px",
+                    p: { xs: "13px 12px", sm: "20px 25px" },
                     background: colors.secondBackground[100],
                   }}
                 >
@@ -97,9 +98,20 @@ const Note = () => {
                       alignItems: "center",
                     }}
                   >
-                    <EditNoteModal note={note} title={title} id={id} />
-                    <InfoSnackbar copyToClipboard={copyToClipboard} />
-                    <DeleteModal deleteNote={deleteNote} id={id} />
+                    <Box sx={{ display: { xs: "block", sm: "none" } }}>
+                      <ToolsMenu
+                        note={note}
+                        title={title}
+                        id={id}
+                        deleteNote={deleteNote}
+                        copyToClipboard={copyToClipboard}
+                      />
+                    </Box>
+                    <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+                      <EditNoteModal note={note} title={title} id={id} />
+                      <InfoSnackbar copyToClipboard={copyToClipboard} />
+                      <DeleteModal deleteNote={deleteNote} id={id} />
+                    </Box>
                   </Box>
                   <Box>
                     <Typography
@@ -108,7 +120,9 @@ const Note = () => {
                     >
                       {title}
                     </Typography>
-                    <Typography style={{ whiteSpace: "pre-line" }}>
+                    <Typography
+                      style={{ whiteSpace: "pre-line", marginBottom: "8px" }}
+                    >
                       {note}
                     </Typography>
                   </Box>

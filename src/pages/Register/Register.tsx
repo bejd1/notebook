@@ -96,7 +96,7 @@ export default function Register() {
       <Card
         sx={{
           width: "100%",
-          margin: "0 20px",
+          margin: "0 15px",
           mb: { md: "100px", xs: "30px" },
           mt: "55px",
         }}

@@ -16,6 +16,7 @@ export const Nav = () => {
         top: "0",
         zIndex: "3",
         mb: "70px",
+        backgroundColor: colors.background[100],
       }}
     >
       <Box

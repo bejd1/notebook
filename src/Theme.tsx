@@ -1,11 +1,11 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme, Theme } from "@mui/material/styles";
 
-export const tokens = (mode: "light" | "dark") => ({
+export const tokens = (mode: "light" | "dark", severity?: string) => ({
   ...(mode === "dark"
     ? {
         background: {
-          100: "#000000",
+          100: "#1D2124",
         },
         secondary: {
           100: "#FFFFFF",
@@ -34,10 +34,13 @@ export const tokens = (mode: "light" | "dark") => ({
         border: {
           100: "#1e1e1e",
         },
+        severity: {
+          main: severity === "success" ? "#fff" : "#fff",
+        },
       }
     : {
         background: {
-          100: "#FFFFFF",
+          100: "#F9F9F9",
         },
         secondary: {
           100: "#000000",
@@ -65,6 +68,9 @@ export const tokens = (mode: "light" | "dark") => ({
         },
         border: {
           100: "#fff",
+        },
+        severity: {
+          main: severity === "success" ? "#fff" : "#fff",
         },
       }),
 });
