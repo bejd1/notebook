@@ -27,7 +27,14 @@ export default function NoteTools() {
       {!authUser ? (
         <Login />
       ) : (
-        <Box width="100%" mt="110px" overflow="hidden" minHeight="88vh">
+        <Box
+          sx={{
+            mt: { xs: "80px", sm: "110px" },
+            minHeight: { xs: "92vh", sm: "88vh", md: "86vh", lg: "89vh" },
+          }}
+          width="100%"
+          overflow="hidden"
+        >
           <Typography
             textAlign="center"
             variant="h2"

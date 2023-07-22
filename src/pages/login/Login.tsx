@@ -19,30 +19,45 @@ import {
 } from "firebase/auth";
 import { tokens } from "../../Theme";
 import { GitHub } from "@mui/icons-material";
+import ErrorIcon from "@mui/icons-material/Error";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface IFormInput {
+  email: string;
+  password: string;
+}
 
 export default function Login() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [authing, setAuthing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const auth = getAuth();
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>();
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    const { email, password } = data;
+    login(email, password);
+  };
 
   // login with email and password
-  const login = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const login = async (email: string, password: string) => {
     setAuthing(true);
     try {
       await signInWithEmailAndPassword(auth, email, password).then(
         (response) => {
           console.log(response.user.uid);
+          window.scrollTo({ top: 0, behavior: "smooth" });
           navigate("/notebook");
         }
       );
-    } catch (err) {
-      console.log(err);
-      setAuthing(false);
+    } catch (err: any) {
+      setErrorMessage(err.message);
     }
   };
 
@@ -52,6 +67,7 @@ export default function Login() {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider()).then((response) => {
         console.log(response.user.uid);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         navigate("/notebook");
       });
     } catch (err) {
@@ -63,9 +79,11 @@ export default function Login() {
   // login with github
   const signInWithGithub = async () => {
     try {
-      const response = await signInWithPopup(auth, new GithubAuthProvider());
-      console.log(response.user.uid);
-      navigate("/notebook");
+      await signInWithPopup(auth, new GithubAuthProvider()).then((response) => {
+        console.log(response.user.uid);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        navigate("/notebook");
+      });
     } catch (error) {
       console.log(error);
     }
@@ -110,7 +128,7 @@ export default function Login() {
           </Typography>
 
           <form
-            onSubmit={login}
+            onSubmit={handleSubmit(onSubmit)}
             style={{
               width: "80%",
               display: "flex",
@@ -127,6 +145,10 @@ export default function Login() {
               <Box sx={{ mb: "12px" }}>
                 <TextField
                   autoFocus
+                  {...register("email", {
+                    required: true,
+                    pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  })}
                   type="email"
                   sx={{
                     width: "100%",
@@ -135,21 +157,64 @@ export default function Login() {
                   }}
                   label="Email"
                   variant="outlined"
-                  onChange={(event) => {
-                    setEmail(event.target.value);
-                  }}
                 />
+                {errors.email && (
+                  <Typography
+                    sx={{
+                      p: "0",
+                      mt: "8px",
+                      color: "#ff3333",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1px",
+                    }}
+                    className="error"
+                  >
+                    <ErrorIcon /> Invalid email
+                  </Typography>
+                )}
               </Box>
               <Box sx={{ mb: "12px" }}>
                 <TextField
+                  {...register("password", {
+                    required: true,
+                    minLength: 6,
+                  })}
                   type="password"
                   sx={{ width: "100%" }}
                   label="Password"
                   variant="outlined"
-                  onChange={(event) => {
-                    setPassword(event.target.value);
-                  }}
                 />
+                {errors.password && (
+                  <Typography
+                    sx={{
+                      p: "0",
+                      mt: "8px",
+                      color: "#ff3333",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1px",
+                    }}
+                    className="error"
+                  >
+                    <ErrorIcon /> Password must have at least 6 characters
+                  </Typography>
+                )}
+                {errorMessage && (
+                  <Typography
+                    sx={{
+                      p: "0",
+                      mt: "8px",
+                      color: "#ff3333",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1px",
+                    }}
+                    className="error"
+                  >
+                    <ErrorIcon /> Incorrect username or password.
+                  </Typography>
+                )}
               </Box>
               <Button
                 type="submit"

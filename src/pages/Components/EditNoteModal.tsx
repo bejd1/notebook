@@ -25,7 +25,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   boxShadow: 24,
   pt: 2,
-  px: 4,
+  px: { xs: "10px", sm: "40px" },
   pb: 3,
 };
 
@@ -33,6 +33,7 @@ interface EditI {
   note: string;
   title: string;
   id: string;
+  handleCloseMenu: () => void;
 }
 
 interface IEditFormInput {
@@ -41,7 +42,12 @@ interface IEditFormInput {
   example: string;
 }
 
-const EditNoteModal = ({ title, note, id }: EditI) => {
+const EditNoteModal: React.FC<EditI> = ({
+  title,
+  note,
+  id,
+  handleCloseMenu,
+}) => {
   const [open, setOpen] = useState(false);
   const [editTitle, setEditTitle] = useState<string>(title);
   const [editNote, setEditNote] = useState<string>(note);
@@ -61,6 +67,7 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
 
   const handleClose = () => {
     setOpen(false);
+    handleCloseMenu();
   };
 
   const onSubmit = () => {
@@ -73,12 +80,13 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
     });
     reset();
     handleClose();
+    handleCloseMenu();
   };
 
   return (
     <Box>
       <Tooltip title="Edit note">
-        <IconButton onClick={handleOpen} sx={{ p: { xs: "5px", sm: "8px" } }}>
+        <IconButton onClick={handleOpen} sx={{ p: { xs: "8px" } }}>
           <Edit style={{ color: colors.secondary[100] }} />
         </IconButton>
       </Tooltip>
@@ -91,14 +99,19 @@ const EditNoteModal = ({ title, note, id }: EditI) => {
         <Box
           sx={{
             ...style,
-            minWidth: "80%",
+            minWidth: { xs: "92%", sm: "80%" },
             minHeight: "300px",
             background: colors.secondBackground[100],
+            textAlign: { xs: "center", sm: "left" },
           }}
         >
           <Button
             onClick={handleClose}
-            sx={{ position: "absolute", top: "20px", right: "25px" }}
+            sx={{
+              position: "absolute",
+              top: { xs: "10px", sm: "20px" },
+              right: { xs: "0", sm: "25px" },
+            }}
           >
             <CloseIcon />
           </Button>

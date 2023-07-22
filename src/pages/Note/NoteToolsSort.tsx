@@ -70,21 +70,33 @@ export default function BasicMenu({ setData, data }: NoteProps) {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        sx={{ gap: 0 }}
       >
-        <MenuItem onClick={() => sortByDate(true)}>
-          <ListItemIcon>
-            <CallReceivedIcon
+        <MenuItem
+          sx={{ p: { xs: "4px", sm: "6px 16px" } }}
+          onClick={() => sortByDate(true)}
+        >
+          <ListItemIcon sx={{ display: "flex", justifyContent: "center" }}>
+            <CallMadeIcon
               fontSize="small"
               sx={{ color: colors.secondary[100] }}
             />
           </ListItemIcon>
-          <ListItemText sx={{ color: colors.secondary[100] }}>
+          <ListItemText
+            sx={{
+              color: colors.secondary[100],
+              pr: "4px",
+            }}
+          >
             Date: from oldest
           </ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => sortByDate(false)}>
-          <ListItemIcon>
-            <CallMadeIcon
+        <MenuItem
+          sx={{ p: { xs: "4px", sm: "6px 16px" } }}
+          onClick={() => sortByDate(false)}
+        >
+          <ListItemIcon sx={{ display: "flex", justifyContent: "center" }}>
+            <CallReceivedIcon
               fontSize="small"
               sx={{ color: colors.secondary[100] }}
             />

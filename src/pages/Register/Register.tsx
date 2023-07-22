@@ -38,6 +38,7 @@ export default function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     const { email, password } = data;
@@ -50,11 +51,12 @@ export default function Register() {
       await createUserWithEmailAndPassword(auth, email, password).then(
         (userCredential) => {
           console.log(userCredential);
+          window.scrollTo({ top: 0, behavior: "smooth" });
           navigate("/notebook");
         }
       );
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      setErrorMessage(err.message);
     }
   };
 
@@ -64,10 +66,12 @@ export default function Register() {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider()).then((response) => {
         console.log(response.user.uid);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         navigate("/notebook");
       });
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      setErrorMessage(err.message);
       setAuthing(false);
     }
   };
@@ -77,6 +81,7 @@ export default function Register() {
     try {
       const response = await signInWithPopup(auth, new GithubAuthProvider());
       console.log(response.user.uid);
+      window.scrollTo({ top: 0, behavior: "smooth" });
       navigate("/notebook");
     } catch (error: any) {
       console.log(error);
@@ -187,6 +192,21 @@ export default function Register() {
                     className="error"
                   >
                     <ErrorIcon /> Password must have at least 6 characters
+                  </Typography>
+                )}
+                {errorMessage && (
+                  <Typography
+                    sx={{
+                      p: "0",
+                      mt: "8px",
+                      color: "#ff3333",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1px",
+                    }}
+                    className="error"
+                  >
+                    <ErrorIcon /> Sorry, that email is already taken
                   </Typography>
                 )}
               </Box>

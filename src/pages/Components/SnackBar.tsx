@@ -11,9 +11,13 @@ interface State extends SnackbarOrigin {
 
 interface CopyToClipboardI {
   copyToClipboard: () => void;
+  handleCloseMenu: () => void;
 }
 
-export default function InfoSnackbar({ copyToClipboard }: CopyToClipboardI) {
+export default function InfoSnackbar({
+  copyToClipboard,
+  handleCloseMenu,
+}: CopyToClipboardI) {
   const [state, setState] = React.useState<State>({
     open: false,
     vertical: "top",
@@ -30,13 +34,14 @@ export default function InfoSnackbar({ copyToClipboard }: CopyToClipboardI) {
 
   const handleClose = () => {
     setState({ ...state, open: false });
+    handleCloseMenu();
   };
 
   const buttons = (
     <React.Fragment>
       <Tooltip title="Copy">
         <IconButton
-          sx={{ p: { xs: "5px", sm: "8px" } }}
+          sx={{ p: { xs: "8px" } }}
           onClick={handleClick({ vertical: "top", horizontal: "right" })}
         >
           <ContentCopyIcon style={{ color: colors.secondary[100] }} />
@@ -50,7 +55,7 @@ export default function InfoSnackbar({ copyToClipboard }: CopyToClipboardI) {
       {buttons}
       <Snackbar
         open={open}
-        autoHideDuration={4000}
+        autoHideDuration={2500}
         onClose={handleClose}
         anchorOrigin={{ vertical, horizontal }}
       >

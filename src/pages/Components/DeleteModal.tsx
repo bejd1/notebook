@@ -12,7 +12,7 @@ const style = {
   top: "45%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: { xs: "90%", sm: " 400px" },
   boxShadow: 24,
   p: 4,
 };
@@ -20,24 +20,33 @@ const style = {
 interface DeleteModalProps {
   deleteNote: (id: string) => void;
   id: string;
+  handleCloseMenu: () => void;
 }
 
-export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
+export default function DeleteModal({
+  deleteNote,
+  id,
+  handleCloseMenu,
+}: DeleteModalProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    handleCloseMenu();
+  };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const handleDelete = () => {
     deleteNote(id);
     handleClose();
+    handleCloseMenu();
   };
 
   return (
     <div>
       <Tooltip title="Delete">
-        <IconButton onClick={handleOpen} sx={{ p: { xs: "5px", sm: "8px" } }}>
+        <IconButton onClick={handleOpen} sx={{ p: { xs: "8px" } }}>
           <DeleteIcon style={{ color: colors.secondary[100] }} />
         </IconButton>
       </Tooltip>
@@ -53,6 +62,7 @@ export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
             variant="h3"
             component="h2"
             textAlign="center"
+            fontSize={{ xs: "20px" }}
           >
             You want to delete this note?
           </Typography>
@@ -61,7 +71,7 @@ export default function DeleteModal({ deleteNote, id }: DeleteModalProps) {
               display: "flex",
               justifyContent: "center",
               marginTop: "20px",
-              gap: "50px",
+              gap: { xs: "30px", sm: "50px" },
             }}
           >
             <Button

@@ -95,12 +95,12 @@ export const Home = () => {
               >
                 <Button
                   sx={{
-                    backgroundColor: colors.green[100],
+                    backgroundColor: colors.blue[100],
                     fontWeight: "bold",
                     p: "6px 12px",
                     fontSize: { xs: "12px", sm: "14px" },
                     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
-                    "&:hover": { backgroundColor: colors.greenHover[100] },
+                    "&:hover": { backgroundColor: colors.blueHover[100] },
                   }}
                 >
                   <Link
@@ -112,12 +112,12 @@ export const Home = () => {
                 </Button>
                 <Button
                   sx={{
-                    backgroundColor: colors.blue[100],
+                    backgroundColor: colors.green[100],
                     fontWeight: "bold",
                     p: "6px 12px",
                     fontSize: { xs: "12px", sm: "14px" },
                     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
-                    "&:hover": { backgroundColor: colors.blueHover[100] },
+                    "&:hover": { backgroundColor: colors.greenHover[100] },
                   }}
                 >
                   <Link

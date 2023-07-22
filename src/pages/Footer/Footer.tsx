@@ -9,7 +9,7 @@ export const Footer = () => {
       sx={{
         position: "absolute",
         bottom: "0",
-        height: "20px",
+        height: "25px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

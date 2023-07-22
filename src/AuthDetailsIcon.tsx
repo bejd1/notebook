@@ -53,15 +53,18 @@ export default function BasicMenu() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          sx={{ p: { xs: "4px 9px", sm: "6px 16px" } }}
+          onClick={handleClose}
+        >
           <ListItemText onClick={colorMode.toggleColorMode}>
             {theme.palette.mode === "dark" ? (
-              <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
                 <LightModeOutlinedIcon />
                 <Typography>Light Mode</Typography>
               </Box>
             ) : (
-              <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
                 <DarkModeOutlinedIcon />
                 <Typography>Dark mode</Typography>
               </Box>
@@ -69,11 +72,14 @@ export default function BasicMenu() {
           </ListItemText>
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          sx={{ p: { xs: "4px 9px", sm: "6px 16px" } }}
+          onClick={handleClose}
+        >
           <ListItemText>
             <Box
               onClick={userSignOut}
-              sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+              sx={{ display: "flex", alignItems: "center", gap: "5px" }}
             >
               <LogoutIcon />
               <Typography>Logout</Typography>

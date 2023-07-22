@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
 import ErrorIcon from "@mui/icons-material/Error";
 import { IFormInput } from "../../types/types";
+import { useState } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -27,12 +28,14 @@ const style = {
   transform: "translate(-50%, -50%)",
   boxShadow: 24,
   pt: 2,
-  px: 4,
+  px: { xs: "10px", sm: "40px" },
   pb: 3,
 };
 
 const AddNoteModal = () => {
   const [open, setOpen] = React.useState(false);
+  const [noteLabel, setNoteLabel] = useState("Note");
+  const [titleLabel, setTitleLabel] = useState("Title");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -85,14 +88,19 @@ const AddNoteModal = () => {
         <Box
           sx={{
             ...style,
-            minWidth: "80%",
+            minWidth: { xs: "92%", sm: "80%" },
             minHeight: "300px",
             background: colors.secondBackground[100],
+            textAlign: { xs: "center", sm: "left" },
           }}
         >
           <Button
             onClick={handleClose}
-            sx={{ position: "absolute", top: "20px", right: "25px" }}
+            sx={{
+              position: "absolute",
+              top: { xs: "10px", sm: "20px" },
+              right: { xs: "0", sm: "25px" },
+            }}
           >
             <CloseIcon />
           </Button>
@@ -106,7 +114,8 @@ const AddNoteModal = () => {
                   minLength: 3,
                 })}
                 fullWidth
-                label="Title"
+                label={titleLabel}
+                onFocus={() => setTitleLabel("Title*")}
                 sx={{ mb: "8px" }}
               />
               {errors?.title?.type === "required" && (
@@ -139,7 +148,8 @@ const AddNoteModal = () => {
                   minLength: 3,
                 })}
                 id="outlined-multiline-static"
-                label="Note"
+                label={noteLabel}
+                onFocus={() => setNoteLabel("Note*")}
                 multiline
                 rows={5}
                 sx={{ width: "100%", mt: "8px" }}

@@ -15,24 +15,26 @@ interface ToolsMenuProps {
   copyToClipboard: () => void;
 }
 
-export default function ToolsMenu({
+const ToolsMenu: React.FC<ToolsMenuProps> = ({
   note,
   title,
   id,
   deleteNote,
   copyToClipboard,
-}: ToolsMenuProps) {
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+
+  const handleCloseMenu = () => {
     setAnchorEl(null);
   };
 
   return (
-    <div>
+    <Box>
       <Button
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
@@ -47,7 +49,7 @@ export default function ToolsMenu({
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseMenu}
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
@@ -55,6 +57,8 @@ export default function ToolsMenu({
           display: "flex",
           justifyContent: "center",
           alignContent: "center",
+          pb: "0",
+          m: "0",
         }}
       >
         <Box
@@ -64,14 +68,28 @@ export default function ToolsMenu({
             justifyContent: "center",
             flexDirection: "column",
             minWidth: "40px",
-            gap: "3px",
+            p: "0",
           }}
         >
-          <EditNoteModal note={note} title={title} id={id} />
-          <InfoSnackbar copyToClipboard={copyToClipboard} />
-          <DeleteModal deleteNote={deleteNote} id={id} />
+          <EditNoteModal
+            handleCloseMenu={handleCloseMenu}
+            note={note}
+            title={title}
+            id={id}
+          />
+          <InfoSnackbar
+            handleCloseMenu={handleCloseMenu}
+            copyToClipboard={copyToClipboard}
+          />
+          <DeleteModal
+            handleCloseMenu={handleCloseMenu}
+            id={id}
+            deleteNote={deleteNote}
+          />
         </Box>
       </Menu>
-    </div>
+    </Box>
   );
-}
+};
+
+export default ToolsMenu;

@@ -14,6 +14,7 @@ import { AuthContext, DataContext, SearchInputContext } from "../../App";
 import NoteTools from "./NoteTools";
 import { NoteI, User } from "../../types/types";
 import ToolsMenu from "../Components/ToolsMenu";
+import ReactMarkdown from "react-markdown";
 
 const Note = () => {
   const theme = useTheme();
@@ -45,13 +46,18 @@ const Note = () => {
         mb: "100px",
       }}
     >
-      {!authUser ? <NoteTools /> : ""}
+      {!authUser && <NoteTools />}
       {data.length === 0 ? (
         <Typography variant="h3" sx={{ mt: "50px" }}>
           Your notes are empty.
         </Typography>
       ) : (
         data
+          // .sort((a, b) => {
+          //   const dateA = new Date(a.date);
+          //   const dateB = new Date(b.date);
+          //   return dateB.getTime() - dateA.getTime();
+          // })
           .filter((item) => {
             if (searchInput === "") {
               return true;
@@ -74,6 +80,7 @@ const Note = () => {
                 sx={{
                   position: "relative",
                   minWidth: { xs: "90%", sm: "80%" },
+                  maxWidth: { xs: "90%", sm: "80%" },
                   m: "0 20px",
                   minHeight: 160,
                   marginTop: "50px",
@@ -116,20 +123,31 @@ const Note = () => {
                   <Box>
                     <Typography
                       variant="h3"
-                      sx={{ marginBottom: "20px", maxWidth: "80%" }}
+                      sx={{
+                        marginBottom: "20px",
+                        maxWidth: "80%",
+                        overflowWrap: "break-word",
+                      }}
                     >
                       {title}
                     </Typography>
-                    <Typography
-                      style={{ whiteSpace: "pre-line", marginBottom: "8px" }}
+                    <Box
+                      sx={{
+                        whiteSpace: "pre-line",
+                        mb: "8px",
+                        overflowWrap: "break-word",
+                        flexWrap: "wrap",
+                      }}
                     >
-                      {note}
-                    </Typography>
+                      <ReactMarkdown>{note}</ReactMarkdown>
+                    </Box>
                   </Box>
                   <Box
                     sx={{ position: "absolute", bottom: "10px", right: "10px" }}
                   >
-                    <Typography sx={{ fontSize: "12px" }}>{date}</Typography>
+                    <Typography sx={{ fontSize: "12px", mt: "10px" }}>
+                      {date}
+                    </Typography>
                   </Box>
                 </CardContent>
               </Card>

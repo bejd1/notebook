@@ -44,6 +44,7 @@ export const NavRight = () => {
         <Button
           variant="contained"
           sx={{
+            p: "6px 14px",
             disabled: "false",
             letterSpacing: "1.6",
             backgroundColor: colors.blue[100],
