@@ -29,12 +29,12 @@ const style = {
   pb: 3,
 };
 
-interface EditI {
+type EditI = {
   note: string;
   title: string;
   id: string;
   handleCloseMenu: () => void;
-}
+};
 
 interface IEditFormInput {
   title: string;
@@ -126,7 +126,7 @@ const EditNoteModal: React.FC<EditI> = ({
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 fullWidth
-                label="Title"
+                label="Title*"
                 sx={{ mb: "8px" }}
               />
               {errors?.title?.type === "required" && (
@@ -161,7 +161,7 @@ const EditNoteModal: React.FC<EditI> = ({
                 value={editNote}
                 onChange={(e) => setEditNote(e.target.value)}
                 id="outlined-multiline-static"
-                label="Note"
+                label="Note*"
                 multiline
                 rows={5}
                 sx={{ width: "100%", mt: "8px" }}

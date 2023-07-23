@@ -74,6 +74,20 @@ export default function BasicMenu({ setData, data }: NoteProps) {
       >
         <MenuItem
           sx={{ p: { xs: "4px", sm: "6px 16px" } }}
+          onClick={() => sortByDate(false)}
+        >
+          <ListItemIcon sx={{ display: "flex", justifyContent: "center" }}>
+            <CallReceivedIcon
+              fontSize="small"
+              sx={{ color: colors.secondary[100] }}
+            />
+          </ListItemIcon>
+          <ListItemText sx={{ color: colors.secondary[100] }}>
+            Date: from latest
+          </ListItemText>
+        </MenuItem>
+        <MenuItem
+          sx={{ p: { xs: "4px", sm: "6px 16px" } }}
           onClick={() => sortByDate(true)}
         >
           <ListItemIcon sx={{ display: "flex", justifyContent: "center" }}>
@@ -89,20 +103,6 @@ export default function BasicMenu({ setData, data }: NoteProps) {
             }}
           >
             Date: from oldest
-          </ListItemText>
-        </MenuItem>
-        <MenuItem
-          sx={{ p: { xs: "4px", sm: "6px 16px" } }}
-          onClick={() => sortByDate(false)}
-        >
-          <ListItemIcon sx={{ display: "flex", justifyContent: "center" }}>
-            <CallReceivedIcon
-              fontSize="small"
-              sx={{ color: colors.secondary[100] }}
-            />
-          </ListItemIcon>
-          <ListItemText sx={{ color: colors.secondary[100] }}>
-            Date: from latest
           </ListItemText>
         </MenuItem>
       </Menu>

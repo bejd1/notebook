@@ -78,6 +78,7 @@ export default function Login() {
 
   // login with github
   const signInWithGithub = async () => {
+    setAuthing(true);
     try {
       await signInWithPopup(auth, new GithubAuthProvider()).then((response) => {
         console.log(response.user.uid);
@@ -86,6 +87,7 @@ export default function Login() {
       });
     } catch (error) {
       console.log(error);
+      setAuthing(false);
     }
   };
 

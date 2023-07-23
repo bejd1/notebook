@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useContext } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -22,6 +23,11 @@ const Note = () => {
   const { searchInput } = useContext(SearchInputContext);
   const { data, setData } = useContext(DataContext);
   const { authUser }: { authUser: User | null } = useContext(AuthContext);
+  const [, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
 
   const deleteNote = (id: string) => {
     const noteRef = ref(database, `users/${auth.currentUser?.uid}/items/${id}`);
@@ -53,11 +59,7 @@ const Note = () => {
         </Typography>
       ) : (
         data
-          // .sort((a, b) => {
-          //   const dateA = new Date(a.date);
-          //   const dateB = new Date(b.date);
-          //   return dateB.getTime() - dateA.getTime();
-          // })
+          .reverse()
           .filter((item) => {
             if (searchInput === "") {
               return true;
@@ -67,6 +69,7 @@ const Note = () => {
                 .includes(searchInput.toLowerCase());
             }
           })
+
           .map((item: NoteI) => {
             const { id, title, note, date } = item;
 
@@ -114,10 +117,23 @@ const Note = () => {
                         copyToClipboard={copyToClipboard}
                       />
                     </Box>
+
                     <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-                      <EditNoteModal note={note} title={title} id={id} />
-                      <InfoSnackbar copyToClipboard={copyToClipboard} />
-                      <DeleteModal deleteNote={deleteNote} id={id} />
+                      <EditNoteModal
+                        handleCloseMenu={handleCloseMenu}
+                        note={note}
+                        title={title}
+                        id={id}
+                      />
+                      <InfoSnackbar
+                        handleCloseMenu={handleCloseMenu}
+                        copyToClipboard={copyToClipboard}
+                      />
+                      <DeleteModal
+                        handleCloseMenu={handleCloseMenu}
+                        deleteNote={deleteNote}
+                        id={id}
+                      />
                     </Box>
                   </Box>
                   <Box>

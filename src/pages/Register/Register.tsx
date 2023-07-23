@@ -78,13 +78,16 @@ export default function Register() {
 
   // login with github
   const signInWithGithub = async () => {
+    setAuthing(true);
     try {
-      const response = await signInWithPopup(auth, new GithubAuthProvider());
-      console.log(response.user.uid);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      navigate("/notebook");
-    } catch (error: any) {
+      await signInWithPopup(auth, new GithubAuthProvider()).then((response) => {
+        console.log(response.user.uid);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        navigate("/notebook");
+      });
+    } catch (error) {
       console.log(error);
+      setAuthing(false);
     }
   };
 

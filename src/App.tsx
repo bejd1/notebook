@@ -58,7 +58,7 @@ function App() {
           note.id = childSnapshot.key as string;
           notes.push(note);
         });
-        setData(notes);
+        setData(notes.reverse());
       });
 
       return () => {
