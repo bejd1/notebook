@@ -89,9 +89,8 @@ const AddNoteModal = () => {
           sx={{
             ...style,
             minWidth: { xs: "92%", sm: "80%" },
-            minHeight: "300px",
+            minHeight: "380px",
             background: colors.secondBackground[100],
-            textAlign: { xs: "center", sm: "left" },
           }}
         >
           <Button
@@ -104,7 +103,9 @@ const AddNoteModal = () => {
           >
             <CloseIcon />
           </Button>
-          <h2 id="parent-modal-title">Add new note</h2>
+          <h2 style={{ textAlign: "center" }} id="parent-modal-title">
+            Add new note
+          </h2>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl fullWidth>
@@ -187,10 +188,11 @@ const AddNoteModal = () => {
                 variant="contained"
                 sx={{
                   position: "absolute",
-                  bottom: "0px",
+                  bottom: { xs: "-15px", sm: "0" },
                   right: "0px",
                   border: "none",
                   color: "#fff",
+                  mt: { xs: "8px", sm: "0" },
                   background: colors.blue[100],
                   fontWeight: "bold",
                   "&:hover": { backgroundColor: colors.blueHover[100] },

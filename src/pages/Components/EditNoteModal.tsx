@@ -100,9 +100,8 @@ const EditNoteModal: React.FC<EditI> = ({
           sx={{
             ...style,
             minWidth: { xs: "92%", sm: "80%" },
-            minHeight: "300px",
+            minHeight: "380px",
             background: colors.secondBackground[100],
-            textAlign: { xs: "center", sm: "left" },
           }}
         >
           <Button
@@ -115,7 +114,9 @@ const EditNoteModal: React.FC<EditI> = ({
           >
             <CloseIcon />
           </Button>
-          <h2 id="parent-modal-title">Edit note</h2>
+          <h2 style={{ textAlign: "center" }} id="parent-modal-title">
+            Edit note
+          </h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl fullWidth>
               <TextField
@@ -173,7 +174,7 @@ const EditNoteModal: React.FC<EditI> = ({
                       color: "#ff3333",
                       mt: "8px",
                       display: "flex",
-                      alignItems: "center",
+                      alignItems: "start",
                       gap: "1px",
                     }}
                   >
@@ -199,10 +200,11 @@ const EditNoteModal: React.FC<EditI> = ({
                 variant="contained"
                 sx={{
                   position: "absolute",
-                  bottom: "0px",
+                  bottom: { xs: "-15px", sm: "0" },
                   right: "0px",
                   border: "none",
                   color: "#fff",
+                  mt: { xs: "8px", sm: "0" },
                   background: colors.blue[100],
                   fontWeight: "bold",
                   "&:hover": { backgroundColor: colors.blueHover[100] },

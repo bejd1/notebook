@@ -94,7 +94,7 @@ export default function Login() {
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: { xs: "120vh", sm: "100vh" },
         width: "520px",
         display: "flex",
         justifyContent: "center",
@@ -146,7 +146,6 @@ export default function Login() {
             >
               <Box sx={{ mb: "12px" }}>
                 <TextField
-                  autoFocus
                   {...register("email", {
                     required: true,
                     pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -214,7 +213,7 @@ export default function Login() {
                     }}
                     className="error"
                   >
-                    <ErrorIcon /> Incorrect username or password.
+                    <ErrorIcon /> Incorrect email or password.
                   </Typography>
                 )}
               </Box>

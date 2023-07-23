@@ -94,7 +94,7 @@ export default function Register() {
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: { xs: "120vh", sm: "100vh" },
         width: "520px",
         display: "flex",
         justifyContent: "center",
@@ -145,7 +145,6 @@ export default function Register() {
             >
               <Box sx={{ mb: "12px" }}>
                 <TextField
-                  autoFocus
                   {...register("email", {
                     required: true,
                     pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
