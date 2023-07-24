@@ -33,12 +33,13 @@ export default function Register() {
   const [authing, setAuthing] = useState(false);
   const auth = getAuth();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessageEmail, setErrorMessageEmail] = useState<string>("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     const { email, password } = data;
@@ -72,6 +73,7 @@ export default function Register() {
     } catch (err: any) {
       console.log(err);
       setErrorMessage(err.message);
+      setErrorMessageEmail(err.message);
       setAuthing(false);
     }
   };
@@ -82,11 +84,13 @@ export default function Register() {
     try {
       await signInWithPopup(auth, new GithubAuthProvider()).then((response) => {
         console.log(response.user.uid);
+
         window.scrollTo({ top: 0, behavior: "smooth" });
         navigate("/notebook");
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err: any) {
+      console.log(err);
+      setErrorMessageEmail(err.message);
       setAuthing(false);
     }
   };
@@ -163,6 +167,7 @@ export default function Register() {
                       display: "flex",
                       alignItems: "center",
                       gap: "1px",
+                      fontSize: "14px",
                     }}
                     className="error"
                   >
@@ -190,6 +195,7 @@ export default function Register() {
                       display: "flex",
                       alignItems: "center",
                       gap: "1px",
+                      fontSize: "14px",
                     }}
                     className="error"
                   >
@@ -205,10 +211,28 @@ export default function Register() {
                       display: "flex",
                       alignItems: "center",
                       gap: "1px",
+                      fontSize: "14px",
                     }}
                     className="error"
                   >
                     <ErrorIcon /> Sorry, that email is already taken
+                  </Typography>
+                )}
+                {errorMessageEmail && (
+                  <Typography
+                    sx={{
+                      p: "0",
+                      mt: "8px",
+                      color: "#ff3333",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1px",
+                      fontSize: "14px",
+                    }}
+                    className="error"
+                  >
+                    <ErrorIcon /> You can't use the same email for github and
+                    google.
                   </Typography>
                 )}
               </Box>

@@ -33,6 +33,7 @@ interface DataI {
 
 interface User {
   email: string;
+  displayName?: string;
 }
 
 interface SearchingInputI {
@@ -58,8 +59,8 @@ function App() {
           note.id = childSnapshot.key as string;
           notes.push(note);
         });
-        setData(notes);
-        // setData(notes.reverse());
+        // setData(notes);
+        setData(notes.reverse());
       });
 
       return () => {

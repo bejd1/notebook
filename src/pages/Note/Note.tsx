@@ -59,7 +59,6 @@ const Note = () => {
         </Typography>
       ) : (
         data
-          .reverse()
           .filter((item) => {
             if (searchInput === "") {
               return true;

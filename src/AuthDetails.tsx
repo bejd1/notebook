@@ -7,6 +7,7 @@ import { tokens } from "./Theme";
 
 interface User {
   email: string;
+  displayName?: string;
 }
 
 const AuthDetails = () => {
