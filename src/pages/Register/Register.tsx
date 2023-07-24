@@ -34,7 +34,6 @@ export default function Register() {
   const auth = getAuth();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [errorMessageEmail, setErrorMessageEmail] = useState<string>("");
   const {
     register,
     handleSubmit,
@@ -73,7 +72,6 @@ export default function Register() {
     } catch (err: any) {
       console.log(err);
       setErrorMessage(err.message);
-      setErrorMessageEmail(err.message);
       setAuthing(false);
     }
   };
@@ -90,7 +88,6 @@ export default function Register() {
       });
     } catch (err: any) {
       console.log(err);
-      setErrorMessageEmail(err.message);
       setAuthing(false);
     }
   };
@@ -216,23 +213,6 @@ export default function Register() {
                     className="error"
                   >
                     <ErrorIcon /> Sorry, that email is already taken
-                  </Typography>
-                )}
-                {errorMessageEmail && (
-                  <Typography
-                    sx={{
-                      p: "0",
-                      mt: "8px",
-                      color: "#ff3333",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "1px",
-                      fontSize: "14px",
-                    }}
-                    className="error"
-                  >
-                    <ErrorIcon /> You can't use the same email for github and
-                    google.
                   </Typography>
                 )}
               </Box>

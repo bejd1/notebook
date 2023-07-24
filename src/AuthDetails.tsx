@@ -33,18 +33,6 @@ const AuthDetails = () => {
             alignItems: "center",
           }}
         >
-          <Typography
-            sx={{
-              color: colors.secondary[100],
-              display: {
-                "@media (max-width: 700px)": {
-                  display: "none",
-                },
-              },
-            }}
-          >{`Signed In as ${
-            typeof authUser === "string" ? "Unknown User" : authUser.email
-          }`}</Typography>
           {/* menu */}
           <AuthDetailsIcon />
         </Box>

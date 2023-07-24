@@ -32,7 +32,6 @@ export default function Login() {
   const colors = tokens(theme.palette.mode);
   const [authing, setAuthing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [errorMessageEmail, setErrorMessageEmail] = useState<string>("");
   const auth = getAuth();
   const navigate = useNavigate();
   const {
@@ -74,7 +73,6 @@ export default function Login() {
     } catch (err: any) {
       console.log(err);
       setAuthing(false);
-      setErrorMessageEmail(err.message);
     }
   };
 
@@ -90,7 +88,6 @@ export default function Login() {
     } catch (err: any) {
       console.log(err);
       setAuthing(false);
-      setErrorMessageEmail(err.message);
     }
   };
 
@@ -220,23 +217,6 @@ export default function Login() {
                     className="error"
                   >
                     <ErrorIcon /> Incorrect email or password.
-                  </Typography>
-                )}
-                {errorMessageEmail && (
-                  <Typography
-                    sx={{
-                      p: "0",
-                      mt: "8px",
-                      color: "#ff3333",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "1px",
-                      fontSize: "14px",
-                    }}
-                    className="error"
-                  >
-                    <ErrorIcon /> You can't use the same email for github and
-                    google.
                   </Typography>
                 )}
               </Box>
