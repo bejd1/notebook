@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/notebook/static/css/main.93a0497a.css",
-    "main.js": "/notebook/static/js/main.72f900b4.js",
+    "main.js": "/notebook/static/js/main.15e4a19f.js",
     "static/media/laptop-lg.png": "/notebook/static/media/laptop-lg.c5a0d68374582c06f30d.png",
     "index.html": "/notebook/index.html",
     "main.93a0497a.css.map": "/notebook/static/css/main.93a0497a.css.map",
-    "main.72f900b4.js.map": "/notebook/static/js/main.72f900b4.js.map"
+    "main.15e4a19f.js.map": "/notebook/static/js/main.15e4a19f.js.map"
   },
   "entrypoints": [
     "static/css/main.93a0497a.css",
-    "static/js/main.72f900b4.js"
+    "static/js/main.15e4a19f.js"
   ]
 }
