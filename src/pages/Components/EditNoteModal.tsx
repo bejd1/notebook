@@ -210,7 +210,7 @@ const EditNoteModal: React.FC<EditI> = ({
                   "&:hover": { backgroundColor: colors.blueHover[100] },
                 }}
               >
-                Edit
+                Save
               </Button>
             </FormControl>
           </form>
