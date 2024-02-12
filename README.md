@@ -1,6 +1,6 @@
 # Notebook 
 
-I wrote an online notebook project in React ts with MUI and Firebase. 
+I wrote an online notebook project in React Typescript with Materials UI and Firebase. 
 In Firebase, I use realtime database and authenticator to be able to log in to the application via email, gmail or github.
 I wrote the applications for all those who want to keep their notes in one place and easily access, add, edit, copy and search them.
 In addition, notes can be written using **Markdown**, I think it's a great idea. 
@@ -10,13 +10,6 @@ I recommend everyone to test light and dark mode.
 ## Technologies
 
 [![My Skills](https://skillicons.dev/icons?i=react,ts,firebase,mui,&perline=4)](https://skillicons.dev)
-
-## Photos
-
-![notebook main page](https://scontent-waw1-1.xx.fbcdn.net/v/t1.15752-9/362301080_994012301642220_3279320705086487518_n.png?_nc_cat=102&ccb=1-7&_nc_sid=ae9488&_nc_ohc=3Uwz4DUjaHsAX9xMem9&_nc_ht=scontent-waw1-1.xx&oh=03_AdQ9glJ4ZEsVqlJWq1T8vxe49inYtmC2iYiGoWyJI6N3UA&oe=64E52D86)
-![add new note](https://scontent-waw1-1.xx.fbcdn.net/v/t1.15752-9/362370735_649826553878107_7201178883696056777_n.png?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=eX46osIvSHoAX8Pjj7V&_nc_ht=scontent-waw1-1.xx&oh=03_AdRANjrxDLondv3l5oTNawKMJPz8SV3FonW8J-F1JteU6w&oe=64E61BAB)
-![my notebook](https://scontent-waw1-1.xx.fbcdn.net/v/t1.15752-9/362447178_267209362600167_3978603406058763327_n.png?_nc_cat=100&ccb=1-7&_nc_sid=ae9488&_nc_ohc=FLA_tqwd2HIAX9YbGir&_nc_ht=scontent-waw1-1.xx&oh=03_AdSY08MWGUg0-6bQEk2SW89FzzT7MuIrbQnssKpkwBlykw&oe=64E5F5FB)
-
 
 
 # Getting Started with Create React App
